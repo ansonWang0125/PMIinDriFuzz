@@ -1,0 +1,9 @@
+[submodule "qemu"]
+	path = qemu
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-qemu.git
+[submodule "kernel"]
+	path = kernel
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-kernel.git
+[submodule "syzkaller"]
+	path = syzkaller
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-syzkaller.git

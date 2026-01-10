@@ -3,3 +3,10 @@
     2. Run the PrIntFuzz.
     3. Resolve the dependency bug (incompatible problem in compiler version and cmake version) in PrIntFuzz
     4. Find the config of guest kernel and syzkaller for PCI.
+1/10:
+    1. Adjust the config of guest kernel and syzkaller to fit our project.
+    2. Complete enable_config / printfuzz_get utils
+
+DAILY_TODO:
+    1. Test kernel, qemu and syzkaller can run PCI driver
+    2. Figure out how syzkaller runs qemu and why agamotto doesn't provide qemu command.

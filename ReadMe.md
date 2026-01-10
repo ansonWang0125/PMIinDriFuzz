@@ -13,10 +13,14 @@ This work is targeted on optimizing the "fuzzing loop" in kernel fuzzing. We wan
 
 ## Setup
 
+TODO-L4: Complete filled commit for kernel, qemu, syzkaller.
+Kernel version:
+
 ## File Structure
 .
-├── config/     # Configuration for each system.
-└── tutorial    # Building instructions for building each third-party projects and library.
+├── config/      # Configuration for each system.
+├── util/        # Utilities
+└── tutorial/    # Building instructions for building each third-party projects and library.
 
 ## TODO Priority Levels
 

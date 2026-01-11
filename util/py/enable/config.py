@@ -27,11 +27,14 @@ def enable_config():
         else:
             _enable_config('-set-val', config_name, config_status)
 
-if __name__ == '__main__':
+def parse_arg():
     parser = argparse.ArgumentParser(prog="enable_config", description="A simple program to enable driver config in kernel config.")
     parser.add_argument("-s", "--source")
     parser.add_argument("-t", "--target")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+if __name__ == '__main__':
+    args = parse_arg()
     source_json = source_json_dir + args.source
     target_config = target_config_dir + args.target
     cmd = (f'cp {base_config} {target_config}')

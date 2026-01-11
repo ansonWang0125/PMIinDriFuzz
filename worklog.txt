@@ -6,7 +6,15 @@
 1/10:
     1. Adjust the config of guest kernel and syzkaller to fit our project.
     2. Complete enable_config / printfuzz_get utils
+1/11:
+    1. Find the emulated device for PCI
+    2. Complete qemu command genrator
+    3. Complete kernel compile scripts
 
 DAILY_TODO:
-    1. Test kernel, qemu and syzkaller can run PCI driver
-    2. Figure out how syzkaller runs qemu and why agamotto doesn't provide qemu command.
+    1. Update cloud lab.
+    2. Check qemu + kernel is runnable
+    3. Find how agamotto runs VM
+    4. Check syzkaller + qemu + kernel can record LBRs
+    5. Patch perf remote functionality
+    6. Profile PCI

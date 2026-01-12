@@ -10,11 +10,14 @@
     1. Find the emulated device for PCI
     2. Complete qemu command genrator
     3. Complete kernel compile scripts
+1/12:
+    1. Complete bootstrap script.
+    2. Read the first three page of Agamotto paper.
+    3. Read the Git document for git submodule, try to build host kernel.
 
 DAILY_TODO:
-    1. Update cloud lab.
-    2. Check qemu + kernel is runnable
-    3. Find how agamotto runs VM
-    4. Check syzkaller + qemu + kernel can record LBRs
-    5. Patch perf remote functionality
-    6. Profile PCI
+    1. Check qemu + kernel is runnable
+    2. Find how agamotto runs VM
+    3. Check syzkaller + qemu + kernel can record LBRs
+    4. Patch perf remote functionality
+    5. Profile PCI

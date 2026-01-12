@@ -1,0 +1,9 @@
+1/12: Check with professor: 
+    I have read the "recent_paper" and "agamotto" again,
+    I want to build a OS-agnostic and fuzzer-agnostic tools leverage the Intel hardware (PMI),
+    but Intel PMI can't knowning the address base of current task,
+    causing lots of profile data generated,
+    the Intel PT can knows the address base,
+    can we leverage the Intel PT to tell us the address base,
+    and using PMI as a lightweight tools to collect profiling data (compare to Intel PT),
+    and using the data to accelerate driver fuzzing (as perf did in user space).

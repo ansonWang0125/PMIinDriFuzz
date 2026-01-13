@@ -14,6 +14,11 @@
     1. Complete bootstrap script.
     2. Read the first three page of Agamotto paper.
     3. Read the Git document for git submodule, try to build host kernel.
+1/13:
+    1. Build host kernel
+    2. Build guest kernel
+    3. Build qemu
+    4. Build syzkaller
 
 DAILY_TODO:
     1. Check qemu + kernel is runnable
@@ -21,3 +26,6 @@ DAILY_TODO:
     3. Check syzkaller + qemu + kernel can record LBRs
     4. Patch perf remote functionality
     5. Profile PCI
+    6. Seperate build directory and source directory
+    7. Write syzkaller manager config.
+    8. Write qemu command.

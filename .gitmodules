@@ -1,0 +1,12 @@
+[submodule "host-kernel"]
+	path = host-kernel
+	url = git@github.com:ntu-ssl/pmu-pmi-passthrough.git
+[submodule "guest-kernel"]
+	path = guest-kernel
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-kernel.git
+[submodule "qemu"]
+	path = qemu
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-qemu.git
+[submodule "fuzzer/go/src/github.com/google/syzkaller"]
+	path = fuzzer/go/src/github.com/google/syzkaller
+	url = git@github.com:ansonWang0125/PMIinDriFuzz-syzkaller.git

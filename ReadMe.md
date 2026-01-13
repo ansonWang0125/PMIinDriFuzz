@@ -19,7 +19,7 @@ Kernel version:
 ## File Structure
 .
 ├── config/      # Configuration for each system.
-├── util/        # Utilities
+├── scripts/     # Scripts for building the system.
 └── tutorial/    # Building instructions for building each third-party projects and library.
 
 ## TODO Priority Levels

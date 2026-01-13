@@ -1,2 +1,12 @@
 1/9 TODO-L2: Arm seems have used PMI for profiling there test program to test the hardware performance, try to find it.
 1/9 TODO-L2: Find the position for PMI in kernel fuzzing, what it can do and what it can't do.
+1/13 TODO-L3: How cmake works? how cmake knows underlining build system, find the basic usage of cmake.
+1/13 TODO-L3: Why we use ninja?
+1/13 TODO-L4: Check build-env/ install only install all we needed.
+1/13 TODO-L4: Check every setting in env.sh is needed, I copy and paste from agamotto repo now.
+1/13 TODO-L4: Write a script to modify grub config for changing host kernel.
+1/13 TODO-L4: Find the dependency control for taskfile.
+1/13 TODO-L3: Rust seems build program totally based on logic, try to learn it.
+1/13 TODO-L4: Update file structure in ReadMe.md.
+1/13 TODO-L4: The syzkaller version agamotto based on is before golang introdue go module, so we can't independently compile a dependency repo, for now I add go as submodule, but we need to find a way to compile syzkaller.
+1/13 TODO-L4: .bashrc can't effected in current shell by using taskfile, find a way to do it.

@@ -10,3 +10,5 @@
 1/13 TODO-L4: Update file structure in ReadMe.md.
 1/13 TODO-L4: The syzkaller version agamotto based on is before golang introdue go module, so we can't independently compile a dependency repo, for now I add go as submodule, but we need to find a way to compile syzkaller.
 1/13 TODO-L4: .bashrc can't effected in current shell by using taskfile, find a way to do it.
+1/14 TODO-L3: What is user "nobody"?
+1/14 TODO-L4: Why PrIntFuzz has "drivers" field in enable_syscalls setting in syz manager config? The config document said "enable_syscall" should be a list of string.

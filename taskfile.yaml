@@ -28,7 +28,8 @@ tasks:
       - echo "Running vm..."
       - ${PYTHON} ${PY_PATH}/run/vm.py
   run-syzkaller:
-      
+      - echo "Running syzkaller..."
+      - ${PYTHON} ${PY_PATH}/gen_syz_config.py
   reload-env:
     cmds:
       - echo "Reloading env..."

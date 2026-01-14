@@ -39,5 +39,5 @@ class GetQemuCommand(object):
         print(self.command)
 
 if __name__ == '__main__':
-    getQemuCommand = GetQemuCommand()
+    getQemuCommand = GetQemuCommand(sys.argv[1:])
     getQemuCommand.process()

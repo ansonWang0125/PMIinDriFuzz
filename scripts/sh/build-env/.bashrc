@@ -116,14 +116,15 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Export path to the root dir of main component in this project. Convenient to operate them in shell command.
 alias python=python3
-export ROOT="/storage"
-export PROJ_PATH="${ROOT}/PMIinDriFuzz"
+export PROJ_ROOT="/storage"
+export PROJ_PATH="${PROJ_ROOT}/PMIinDriFuzz"
 export SCRIPT_PATH="${PROJ_PATH}/scripts"
 export BUILD_PATH="${PROJ_PATH}/build"
-export FUZZER_PATH="${PROJ_PATH}/fuzzer"
 export SH_PATH="${SCRIPT_PATH}/sh"
 export PY_PATH="${SCRIPT_PATH}/py"
-export GOPATH="${FUZZER_PATH}/go"
-export SYZ_PATH="${GOPATH}/src/github.com/google/syzkaller"
-export BASHRC_PATH="${SH_PATH}/build-env/.bashrc"
+export SYZ_PATH="${PROJ_PATH}/fuzzer/go/src/github.com/google/syzkaller"
+export QEMU_PATH="${PROJ_PATH}/qemu"
+export HOST_KERNEL_PATH="${PROJ_PATH}/host-kernel"
+export GUEST_KERNEL_PATH="${PROJ_PATH}/guest-kernel"

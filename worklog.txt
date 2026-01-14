@@ -20,12 +20,16 @@
     3. Build qemu
     4. Build syzkaller
 
+1/14:
+    1. Writing a script for replacing config template!
+
 DAILY_TODO:
-    1. Check qemu + kernel is runnable
-    2. Find how agamotto runs VM
-    3. Check syzkaller + qemu + kernel can record LBRs
-    4. Patch perf remote functionality
-    5. Profile PCI
-    6. Seperate build directory and source directory
-    7. Write syzkaller manager config.
-    8. Write qemu command.
+    1. We lack a template qemu command for running VM!
+        Check how syzkaller run the qemu VM
+    2. We need to manual port PMI work in syzkaller
+    3. Check LBR successfully recorded, if not, fix it. 14:00
+    4. Test LBR (PMI) work properly (frequency test), if not, fix it.
+    5. Check how Intel PT set address base, can we leverage it?
+    6. Read Agamotto Paper. 18:00
+    7. Read Intel PT Paper. 20:00
+    8. Read Other Paper. 22:00

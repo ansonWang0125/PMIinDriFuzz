@@ -16,3 +16,12 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
     result 3: makedeb repo unmaintained
     
     Conclusion: Don't use just on Ubuntu if Ubuntu Distro not 24.04, or be familiar to snap.
+
+# Qemu
+1. /dev/vda:
+    the vda device in vm-template.sh seems like it should run on a kernel with virtio config enable. TODO_L4: Check this statement.
+2. /sys/fuze/connection not exist:
+    My origin guest config is the def config in kernel source, but for building a guest vm, it should execute:
+        make defconfig
+        make kvm_guest.config
+    TODO_L3: What config included in kvm_guest.config but excluded in defconfig

@@ -1,9 +1,0 @@
-{
-    "kernel": ["main", "syzkaller", "agamotto"],
-    "device": ["pci", "fs", "usb"],
-    "pci": ["sound", "fbdev", "gpu", "media", "tty", "crash"],
-    "fs": ["ext4"],
-    "usb": ["ar5523"],
-    "image": ["stretch"],
-    "pub_key": ["stretch.id_rsa"]
-}

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 usage() {
     U=""
@@ -16,12 +17,19 @@ usage() {
 KERNEL="/storage/PMIinDriFuzz/kernel"
 CONFIG="/storage/PMIinDriFuzz/config/kernel/guest_defconfig"
 BUILD_DIR="/storage/PMIinDriFuzz/build/kernel"
+BRANCH="main"
+DEVICE="pci"
+TYPE="fbdev"
 
 while :
 do
     case "$1" in
         -k | --kernel)
             KERNEL="$2"
+            shift 2
+            ;;
+        -B | --branch)
+            BRANCH="$2"
             shift 2
             ;;
         -b | --build)
@@ -61,10 +69,11 @@ if [[ ! -d ${KERNEL} || ! -f ${CONFIG} ]]; then
     exit 1
 fi;
 
-echo "Compiling \"${KERNEL}\" with \"${CONFIG}\"."
+mkdir -p $BUILD_DIR
+
+cp $CONFIG $BUILD_DIR/$BRANCH/$DEVICE/$TYPE/.config
 
 pushd ${KERNEL}
-make $defconfig O=$IMAGE_OUT_DIR/$config
-make olddefconfig
-make -j40
+make olddefconfig O=$BUILD_DIR/$BRANCH/$DEVICE/$TYPE
+make -j40 O=$BUILD_DIR/$BRANCH/$DEVICE/$TYPE
 popd

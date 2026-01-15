@@ -4,10 +4,10 @@ import subprocess
 
 source_json_dir = "/storage/PMIinDriFuzz/config/kernel/enable/"
 target_config_dir = "/storage/PMIinDriFuzz/config/kernel/"
-linux_config_tool = "/storage/PMIinDriFuzz/kernel/scripts/config"
+linux_config_tool = "/storage/PMIinDriFuzz/guest-kernel/scripts/config"
 
 source_json = ""
-base_config = target_config_dir + "guest_defconfig"
+base_config = target_config_dir + "template_defconfig"
 target_config = ""
 
 def _enable_config(mode, config_name, config_status=''):

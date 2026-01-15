@@ -97,7 +97,7 @@ qemu-system-x86_64 \
     -serial ${CONSOLE} \
     -no-reboot \
     -enable-kvm \
-    -cpu host,lbr-fmt=5,pmu=true \
+    -cpu host,pmu=true \
     -s \
     -drive if=none,file=${FS},id=vda,cache=none,format=raw \
     -device virtio-blk-pci,drive=vda \

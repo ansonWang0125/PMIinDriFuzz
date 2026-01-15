@@ -7,29 +7,39 @@ tasks:
       - ${SH_PATH}/build-env/compile_host.sh
       - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/host-kernel -c ${PROJ_PATH}/config/kernel/host_defconfig
       - ${SH_PATH}/install/kernel.sh -k ${PROJ_PATH}/host-kernel
+  build-guest-env:
+      - echo "Buiding guest kernel environment..."
+      - ${SH_PATH}/build-env/compile_guest.sh
+  build-qemu-env:
+      - echo "Buiding qemu environment..."
+      - ${SH_PATH}/build-env/compile_qemu.sh
+  build-syzkaller-env:
+      - echo "Buiding syzkaller environment..."
+      - ${SH_PATH}/fetch/syzkaller.sh
+      - ${SH_PATH}/build-env/compile_syzkaller.sh
+  build-image:
+    cmds:
+      - ${SH_PATH}/build/image.sh
   compile-guest:
     cmds:
       - echo "Compiling guest kernel..."
-      - ${SH_PATH}/build-env/compile_guest.sh
       - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/guest-kernel -c ${PROJ_PATH}/config/kernel/guest_defconfig
   compile-qemu:
     cmds:
       - echo "Compiling qemu..."
-      - ${SH_PATH}/build-env/compile_qemu.sh
       - ${SH_PATH}/compile/qemu.sh
   compile-syzkaller:
     cmds:
       - echo "Compiling syzkaller..."
-      - ${SH_PATH}/fetch/syzkaller.sh
-      - ${SH_PATH}/build-env/compile_syzkaller.sh
       - ${SH_PATH}/compile/syzkaller.sh
   run-vm:
     cmds:
       - echo "Running vm..."
-      - ${PYTHON} ${PY_PATH}/run/vm.py
+      - ${SH_PATH}/run/vm.sh
   run-syzkaller:
       - echo "Running syzkaller..."
-      - ${PYTHON} ${PY_PATH}/gen_syz_config.py
+      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --output ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg
+      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg -debug
   reload-env:
     cmds:
       - echo "Reloading env..."

@@ -18,9 +18,15 @@ Kernel version:
 
 ## File Structure
 .
-├── config/      # Configuration for each system.
-├── scripts/     # Scripts for building the system.
-└── tutorial/    # Building instructions for building each third-party projects and library.
+├── build/
+├── config/
+├── fuzzer/
+├── guest-kernel/
+├── host-kernel/
+├── out/
+├── qemu/
+├── scripts/
+└── tutorial/
 
 ## TODO Priority Levels
 

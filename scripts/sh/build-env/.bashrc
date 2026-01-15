@@ -116,15 +116,23 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Export path to the root dir of main component in this project. Convenient to operate them in shell command.
+sudo usermod -a -G kvm ${USER}
+
+# TODO_L4: Alias seems not inherit in child shell process, check how shell script works in linux.
 alias python=python3
+# Export path to the root dir of main component in this project. Convenient to operate them in shell command.
+export PYTHON="python3"
 export PROJ_ROOT="/storage"
 export PROJ_PATH="${PROJ_ROOT}/PMIinDriFuzz"
 export SCRIPT_PATH="${PROJ_PATH}/scripts"
 export BUILD_PATH="${PROJ_PATH}/build"
+export CONFIG_PATH="${PROJ_PATH}/config"
 export SH_PATH="${SCRIPT_PATH}/sh"
 export PY_PATH="${SCRIPT_PATH}/py"
 export SYZ_PATH="${PROJ_PATH}/fuzzer/go/src/github.com/google/syzkaller"
 export QEMU_PATH="${PROJ_PATH}/qemu"
 export HOST_KERNEL_PATH="${PROJ_PATH}/host-kernel"
 export GUEST_KERNEL_PATH="${PROJ_PATH}/guest-kernel"
+export GO_BIN_PATH="${PROJ_PATH}/fuzzer/go/bin"
+export GOPATH="${PROJ_PATH}/fuzzer/go"
+export GOCACHE="${PROJ_ROOT}/fuzzer/.cache/go-build"

@@ -1,0 +1,8 @@
+{
+    "KCOV": "y",
+    "DEBUG_INFO_DWARF4": "y",
+    "KASAN": "y",
+    "KASAN_INLINE": "y",
+    "CONFIGFS_FS": "y",
+    "SECURITYFS": "y"
+}

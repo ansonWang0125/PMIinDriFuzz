@@ -24,6 +24,9 @@
     1. Writing a script for replacing config template!
 1/15:
     1. Run the syzkaller, check everything works fine.
+1/16:
+    1. I found that I am totally wrong to write Perf data to shared memory in guest kernel, It should be the job of guest agent.
+    2. Checked the qemu, syzkaller and kernel works fine.
 
 DAILY_TODO:
     1. We need to manual port PMI work in syzkaller
@@ -33,3 +36,4 @@ DAILY_TODO:
     5. Read Agamotto Paper.
     6. Read Intel PT Paper.
     7. Read Other Paper.
+    8. Write a userspace agent to mmap perf data, then write to shared memory.

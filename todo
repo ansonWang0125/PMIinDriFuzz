@@ -13,3 +13,6 @@
 1/14 TODO-L3: What is user "nobody"?
 1/14 TODO-L4: Why PrIntFuzz has "drivers" field in enable_syscalls setting in syz manager config? The config document said "enable_syscall" should be a list of string.
 1/15 TODO-L4: Integrate string const seperated in python code to env package. 
+1/16 TODO-L3: The c compiler mechanism, how the initcall implemented.
+1/16 TODO-L4: Find a way to run setup command in vm, run the script in scripts/sh/vm/setup.sh
+1/16 TODO-L4: What is qemu object? what is it use for?

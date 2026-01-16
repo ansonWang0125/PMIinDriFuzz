@@ -1,5 +1,4 @@
 /build
 /out
-/fuzzer/go/bin
-/bin
+bin/
 __pycache__/

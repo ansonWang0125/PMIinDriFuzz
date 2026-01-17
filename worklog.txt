@@ -27,13 +27,13 @@
 1/16:
     1. I found that I am totally wrong to write Perf data to shared memory in guest kernel, It should be the job of guest agent.
     2. Checked the qemu, syzkaller and kernel works fine.
+1/17:
+    1. Write user agent to obtain LBR sample data from mmap
 
 DAILY_TODO:
     1. We need to manual port PMI work in syzkaller
-    2. Check LBR successfully recorded, if not, fix it.
-    3. Test LBR (PMI) work properly (frequency test), if not, fix it.
-    4. Check how Intel PT set address base, can we leverage it?
-    5. Read Agamotto Paper.
-    6. Read Intel PT Paper.
-    7. Read Other Paper.
-    8. Write a userspace agent to mmap perf data, then write to shared memory.
+    2. We need to write /sysfs to access pci address.
+    3. Read Agamotto Paper.
+    4. Read Intel PT Paper.
+    5. Read Other Paper.
+    6. Write a userspace agent to mmap perf data, then write to shared memory.

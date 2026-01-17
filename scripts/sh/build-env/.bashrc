@@ -118,6 +118,9 @@ fi
 
 sudo usermod -a -G kvm ${USER}
 
+# Disable nmi_watchdog to avoid host kernel handle pmi as watchdog, which cause hypervisor can't inject PMI to guest.
+echo 0 | sudo tee /proc/sys/kernel/nmi_watchdog
+
 # TODO_L4: Alias seems not inherit in child shell process, check how shell script works in linux.
 alias python=python3
 # Export path to the root dir of main component in this project. Convenient to operate them in shell command.

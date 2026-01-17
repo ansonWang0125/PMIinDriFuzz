@@ -1,13 +1,13 @@
 CC := gcc
 CFLAGS := -Wall
-TARGET := agent
-SOURCE := $(TARGET).c
-HEADER := ./perf.h
 
-all: $(TARGET)
-	
-$(TARGET): $(SOURCE) $(HEADER)
-	$(CC) -o $@ $<
+all: perf.o agent
+
+perf.o: perf.c agent.h
+	$(CC) -c $<
+
+agent: agent.c agent.h
+	$(CC) -o $@ $^
 
 clean:
-	rm $(TARGET)
+	rm perf.o agent

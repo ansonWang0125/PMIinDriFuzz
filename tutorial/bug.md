@@ -25,3 +25,8 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
         make defconfig
         make kvm_guest.config
     TODO_L3: What config included in kvm_guest.config but excluded in defconfig
+
+# fcntl
+1. error: `F_SETSIG' undeclared (first use in this function)
+    sol: [debian report](https://lists.debian.org/debian-amd64/2005/02/msg00765.html) define _GNU_SOURCE  TODO_L3: what is _GNU_SOURCE
+

@@ -22,13 +22,31 @@
 #define RING_BUFFER_PAGES 16
 
 struct perf_event_attr* attr = NULL;
-static int lbr_flag = false;
+static int perf_flag = false;
 static int perf_fd = 0;
 static int enable_ret;
 static int start_ret;
 static void* rbuf;
 static uint64_t next_offset=0;
-static void init_lbr_perf_event_attr(void)
+
+static void init_perf_event_attr(void);
+static int start_perf(unsigned long nr, unsigned long arg0, unsigned long arg1,
+	      unsigned long arg2);
+static int end_perf(void);
+static int perf_event_open(struct perf_event_attr* attr, pid_t pid,
+		    int cpu, int group_fd, unsigned long flags);
+static void write_shared_mem(struct perf_branch_entry* lbrs);
+static void perf_prologue(int nr, ...);
+static void perf_epilogue(void);
+static void perf_setup(void);
+static void sample_handler(int sig_num,siginfo_t *sig_info,void *context);
+
+struct perf_sample {
+	struct perf_event_header header;
+	struct perf_branch_entry lbrs[LBR_BRANCH_NR];
+};
+
+static void init_perf_event_attr(void)
 {
 	attr = (struct perf_event_attr*)malloc(sizeof(struct perf_event_attr));
 	if (!attr) {
@@ -49,19 +67,7 @@ static void init_lbr_perf_event_attr(void)
 	attr->wakeup_events=1;
 }
 
-static int start_nmi_pass(void) {
-    int ret;
-    asm("vmcall" : "=a"(ret) : "a"(100));
-    return ret;
-}
-
-static int end_nmi_pass(void) {
-    int ret;
-    asm("vmcall" : "=a"(ret) : "a"(101));
-    return ret;
-}
-
-static int start_lbr(unsigned long nr, unsigned long arg0, unsigned long arg1,
+static int start_perf(unsigned long nr, unsigned long arg0, unsigned long arg1,
 	      unsigned long arg2)
 {
 	int ret;
@@ -72,7 +78,7 @@ static int start_lbr(unsigned long nr, unsigned long arg0, unsigned long arg1,
 	return ret;
 }
 
-static int end_lbr(void)
+static int end_perf(void)
 {
 	int ret;
 	asm volatile(
@@ -88,97 +94,25 @@ static int perf_event_open(struct perf_event_attr* attr, pid_t pid,
 	return syscall(SYS_perf_event_open, attr, pid, cpu, group_fd, flags);
 }
 
-static void write_shared_mem() {
-	// TODO: Write perf data to vm shared memory
+static void write_shared_mem(struct perf_branch_entry* lbrs) {
+	int i = 0;
+	for (i = 0; i < LBR_NUM; i++){
+		shared_memory.start_addr[shared_memory.head + i] = (int64_t)(lbrs[i].from);
+	}
+	shared_memory.start_addr[i] = DATA_END;
+	shared_memory.head += LBR_NUM;
+
+	return;
 }
 
-static void process_perf_mem() {
-	// TODO: Write perf data to vm shared memory
-}
-
-static void lbr_prologue(int nr, ...)
+static void perf_prologue(int nr, ...)
 {
 	va_list vl;
 	unsigned long arg0, arg1, arg2;
 
 	printf("[perf] prologue start\n");
-	lbr_flag = 1;
-	ioctl(perf_fd, PERF_EVENT_IOC_RESET, 0);
-	/* Dangerous NMI part */
-	if (nr == 16) {
-		// ioctl, pass arguments to hypervisor
-		va_start(vl, nr);
-		arg0 = va_arg(vl, unsigned long);
-		arg1 = va_arg(vl, unsigned long);
-		arg2 = va_arg(vl, unsigned long);
-		va_end(vl);
-		start_ret = start_lbr(nr, arg0, arg1, arg2);
-	} else {
-		// otherwise simply pass syscall nr
-		start_ret = start_lbr(nr, 0, 0, 0);
-	}
-	enable_ret = ioctl(perf_fd, PERF_EVENT_IOC_ENABLE, 0);
-}
-
-static void lbr_epilogue(void)
-{
-	int end_ret;
-
-	if (!lbr_flag)
-		return;
-	ioctl(perf_fd, PERF_EVENT_IOC_DISABLE, 0);
-	end_ret = end_lbr();
-	lbr_flag = 0;
-	printf("[perf] epilogue done, start_ret: %d, enable_ret: %d,"
-	      " end_ret: %d\n",
-	      start_ret, enable_ret, end_ret);
-	// TODO: process perf data
-	// TODO: write to shared memory
-	munmap(rbuf,(1 + RING_BUFFER_PAGES) * PAGE_SIZE);
-}
-
-struct perf_sample {
-	struct perf_event_header header;
-	struct perf_branch_entry lbr[LBR_BRANCH_NR];
-};
-
-void sample_handler(int sig_num,siginfo_t *sig_info,void *context)
-{
-    uint64_t offset = 4096 + next_offset;
-    struct perf_sample* sample=(void*)((uint8_t*)rbuf+offset);
-	printf("sample handler executed!\n");
-	int i = 0;
-	// Filter out the header page
-    // if(sample->header.type==PERF_RECORD_SAMPLE)
-		
-    struct perf_event_mmap_page* rinfo = rbuf;
-    next_offset = rinfo->data_head%(RING_BUFFER_PAGES * PAGE_SIZE);
-}
-
-static void lbr_setup(void)
-{
-	static int setup = 0;
-
-	// Make sure perf stuffs should be cleared at exit
-	if (!setup) {
-		setup = 1;
-		// signal handler?
-		atexit(lbr_epilogue);
-	}
-
-	if (!attr)
-		init_lbr_perf_event_attr();
-	if ((long)attr == NO_PERF_PTR)
-		perf_fd = -1;
-
-	perf_fd = perf_event_open(attr, 0, -1, -1, 0);
-	if (perf_fd < 0) {
-		printf("perf_event_open failed, errno = %d\n", errno);
-	} else {
-		printf("[perf] perf_event_open ok\n");
-	}
-	// TODO: mmap
-	rbuf = mmap(0, (1 + RING_BUFFER_PAGES) * PAGE_SIZE, PROT_READ, MAP_SHARED, perf_fd, 0);
+	// perf mmap.
+	rbuf = mmap(0, (1 + RING_BUFFER_PAGES) * PAGE_SIZE, PROT_WRITE, MAP_SHARED, perf_fd, 0);
 	fcntl(perf_fd,F_SETFL,O_RDWR|O_NONBLOCK|O_ASYNC);
     fcntl(perf_fd,F_SETSIG,SIGIO);
     fcntl(perf_fd,F_SETOWN,getpid());
@@ -188,6 +122,77 @@ static void lbr_setup(void)
 	sig.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGIO, &sig, 0) < 0)
 		return;
+	
+	perf_flag = 1;
+	ioctl(perf_fd, PERF_EVENT_IOC_RESET, 0);
+	/* Dangerous NMI part */
+	if (nr == 16) {
+		// ioctl, pass arguments to hypervisor
+		va_start(vl, nr);
+		arg0 = va_arg(vl, unsigned long);
+		arg1 = va_arg(vl, unsigned long);
+		arg2 = va_arg(vl, unsigned long);
+		va_end(vl);
+		start_ret = start_perf(nr, arg0, arg1, arg2);
+	} else {
+		// otherwise simply pass syscall nr
+		start_ret = start_perf(nr, 0, 0, 0);
+	}
+	enable_ret = ioctl(perf_fd, PERF_EVENT_IOC_ENABLE, 0);
+}
+
+static void perf_epilogue(void)
+{
+	int end_ret;
+
+	if (!perf_flag)
+		return;
+	ioctl(perf_fd, PERF_EVENT_IOC_DISABLE, 0);
+	end_ret = end_perf();
+	perf_flag = 0;
+	printf("[perf] epilogue done, start_ret: %d, enable_ret: %d,"
+	      " end_ret: %d\n",
+	      start_ret, enable_ret, end_ret);
+	munmap(rbuf,(1 + RING_BUFFER_PAGES) * PAGE_SIZE);
+}
+
+static void perf_setup(void)
+{
+	static int setup = 0;
+
+	// Make sure perf stuffs should be cleared at exit
+	if (!setup) {
+		setup = 1;
+		// signal handler?
+		atexit(perf_epilogue);
+	}
+
+	if (!attr)
+		init_perf_event_attr();
+	if ((long)attr == NO_PERF_PTR)
+		perf_fd = -1;
+
+	perf_fd = perf_event_open(attr, 0, -1, -1, 0);
+	if (perf_fd < 0) {
+		printf("perf_event_open failed, errno = %d\n", errno);
+	} else {
+		printf("[perf] perf_event_open ok\n");
+	}
+}
+
+static void sample_handler(int sig_num,siginfo_t *sig_info,void *context)
+{
+    uint64_t offset = 4096 + next_offset;
+    struct perf_sample* sample=(void*)((uint8_t*)rbuf+offset);
+	static int sig_counter = 0;
+	sig_counter += 1;
+    if(shared_memory != NULL && sample->header.type==PERF_RECORD_SAMPLE) {
+		printf("Writing shared memory, sig_counter: %d\n", sig_counter);
+		write_shared_mem(sample->lbrs);
+	}
+		
+    struct perf_event_mmap_page* rinfo = rbuf;
+    next_offset = rinfo->data_head%(RING_BUFFER_PAGES * PAGE_SIZE);
 }
 
 long perf_open(const char* pathname, int flags)
@@ -195,14 +200,14 @@ long perf_open(const char* pathname, int flags)
 	long ret;
 
 	printf("[perf] perf_open\n");
-	lbr_setup();
+	perf_setup();
 	if (perf_fd < 0) {
 		return open(pathname, flags);
 	}
 
-	lbr_prologue(2);
+	perf_prologue(2);
 	ret = open(pathname, flags);
-	lbr_epilogue();
+	perf_epilogue();
 
 	close(perf_fd);
 	return ret;
@@ -219,14 +224,14 @@ long perf_ioctl(int fd, int cmd, ...)
 	arg = va_arg(vl, void*);
 	va_end(vl);
 
-	lbr_setup();
+	perf_setup();
 	if (perf_fd < 0) {
 		return ioctl(fd, cmd, arg);
 	}
 
-	lbr_prologue(16, fd, cmd, arg);
+	perf_prologue(16, fd, cmd, arg);
 	ret = ioctl(fd, cmd, arg);
-	lbr_epilogue();
+	perf_epilogue();
 
 	close(perf_fd);
 	return ret;

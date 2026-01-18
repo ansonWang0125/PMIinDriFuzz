@@ -19,7 +19,6 @@
     2. Build guest kernel
     3. Build qemu
     4. Build syzkaller
-
 1/14:
     1. Writing a script for replacing config template!
 1/15:
@@ -29,11 +28,14 @@
     2. Checked the qemu, syzkaller and kernel works fine.
 1/17:
     1. Write user agent to obtain LBR sample data from mmap
+1/18:
+    1. Write perf infor to shared memory
 
 DAILY_TODO:
     1. We need to manual port PMI work in syzkaller
-    2. We need to write /sysfs to access pci address.
-    3. Read Agamotto Paper.
-    4. Read Intel PT Paper.
-    5. Read Other Paper.
-    6. Write a userspace agent to mmap perf data, then write to shared memory.
+    2. Read Agamotto Paper.
+    3. Read Intel PT Paper.
+    4. Read Other Paper.
+    5. Build the data structure in shared memory.
+    6. Port perf remote to guest kernel
+    7. Check 32 LBR works.

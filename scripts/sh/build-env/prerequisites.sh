@@ -1,6 +1,7 @@
 #!/bin/bash
+set -x
 
-WDIR="/storage/PMIinDriFuzz/util/sh/build-env"
+WDIR="/storage/PMIinDriFuzz/scripts/sh/build-env"
 
 # Update lib
 # Create gpg.key
@@ -19,9 +20,7 @@ sudo apt install task
 # Build environment setting
 pushd ${WDIR}
 cp ./.bashrc ~/.bashrc
-
-source ./.bashrc
 popd
 
 # Build local file structure
-mkdir -p "${PROJ_PATH}/build"
+mkdir -p "/storage/PMIinDriFuzz/build"

@@ -5,7 +5,7 @@ tasks:
     cmds:
       - echo "Building host kernel..."
       - ${SH_PATH}/build-env/compile_host.sh
-      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/host-kernel -c ${PROJ_PATH}/config/kernel/host_defconfig
+      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/host-kernel -c ${PROJ_PATH}/config/kernel/host_defconfig -b n
       - ${SH_PATH}/install/kernel.sh -k ${PROJ_PATH}/host-kernel
   build-guest-env:
       - echo "Buiding guest kernel environment..."

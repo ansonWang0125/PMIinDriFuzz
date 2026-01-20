@@ -28,6 +28,8 @@ static int enable_ret;
 static int start_ret;
 static void* rbuf;
 static uint64_t next_offset=0;
+static struct perf_event_mmap_page* rinfo;
+static int counter = 0;
 
 static void init_perf_event_attr(void);
 static int start_perf(unsigned long nr, unsigned long arg0, unsigned long arg1,
@@ -35,7 +37,6 @@ static int start_perf(unsigned long nr, unsigned long arg0, unsigned long arg1,
 static int end_perf(void);
 static int perf_event_open(struct perf_event_attr* attr, pid_t pid,
 		    int cpu, int group_fd, unsigned long flags);
-static void write_shared_mem(struct perf_branch_entry* lbrs);
 static void perf_prologue(int nr, ...);
 static void perf_epilogue(void);
 static void perf_setup(void);
@@ -60,11 +61,10 @@ static void init_perf_event_attr(void)
 	attr->config = PERF_COUNT_HW_BRANCH_INSTRUCTIONS;
 	attr->exclude_user = 1;
 	attr->disabled = 1;
-	attr->sample_period = 3200;
-	attr->freq = 0;
+	attr->sample_period = 10000;
 	attr->sample_type = PERF_SAMPLE_BRANCH_STACK;
 	attr->branch_sample_type = PERF_SAMPLE_BRANCH_KERNEL | PERF_SAMPLE_BRANCH_COND;
-	attr->wakeup_events=1;
+	attr->wakeup_watermark=PAGE_SIZE; // Send a signal when a page is full.
 }
 
 static int start_perf(unsigned long nr, unsigned long arg0, unsigned long arg1,
@@ -94,17 +94,6 @@ static int perf_event_open(struct perf_event_attr* attr, pid_t pid,
 	return syscall(SYS_perf_event_open, attr, pid, cpu, group_fd, flags);
 }
 
-static void write_shared_mem(struct perf_branch_entry* lbrs) {
-	int i = 0;
-	for (i = 0; i < LBR_NUM; i++){
-		shared_memory.start_addr[shared_memory.head + i] = (int64_t)(lbrs[i].from);
-	}
-	shared_memory.start_addr[i] = DATA_END;
-	shared_memory.head += LBR_NUM;
-
-	return;
-}
-
 static void perf_prologue(int nr, ...)
 {
 	va_list vl;
@@ -122,6 +111,8 @@ static void perf_prologue(int nr, ...)
 	sig.sa_flags = SA_SIGINFO;
 	if (sigaction(SIGIO, &sig, 0) < 0)
 		return;
+	rinfo = rbuf;
+	rinfo->data_tail = 0;
 	
 	perf_flag = 1;
 	ioctl(perf_fd, PERF_EVENT_IOC_RESET, 0);
@@ -154,6 +145,7 @@ static void perf_epilogue(void)
 	      " end_ret: %d\n",
 	      start_ret, enable_ret, end_ret);
 	munmap(rbuf,(1 + RING_BUFFER_PAGES) * PAGE_SIZE);
+	printf("counter: %d\n", counter);
 }
 
 static void perf_setup(void)
@@ -182,17 +174,24 @@ static void perf_setup(void)
 
 static void sample_handler(int sig_num,siginfo_t *sig_info,void *context)
 {
-    uint64_t offset = 4096 + next_offset;
-    struct perf_sample* sample=(void*)((uint8_t*)rbuf+offset);
-	static int sig_counter = 0;
-	sig_counter += 1;
-    if(shared_memory != NULL && sample->header.type==PERF_RECORD_SAMPLE) {
-		printf("Writing shared memory, sig_counter: %d\n", sig_counter);
-		write_shared_mem(sample->lbrs);
+	while (rinfo->data_tail < rinfo->data_head) {
+		uint64_t offset = rinfo->data_offset + next_offset;
+		struct perf_sample* sample=(void*)((uint8_t*)rbuf+offset);
+		static int sig_counter = 0, i = 0;
+		sig_counter += 1;
+		if(shared_memory != NULL && sample->header.type==PERF_RECORD_SAMPLE) {
+			printf("Writing shared memory, sig_counter: %d\n", sig_counter);
+			printf("handle sample, tail: %lx, head: %lx\n", rinfo->data_tail, rinfo->data_head);
+			for (i = 0; i < LBR_NUM; i++){
+				write_shared_mem((int64_t)(sample->lbrs[i].from));
+				write_shared_mem((int64_t)(sample->lbrs[i].to));
+			}
+		}
+		struct perf_event_mmap_page* rinfo = rbuf;
+		rinfo->data_tail += 2 * sizeof(int64_t);
+		next_offset = rinfo->data_tail%(RING_BUFFER_PAGES * PAGE_SIZE);
 	}
-		
-    struct perf_event_mmap_page* rinfo = rbuf;
-    next_offset = rinfo->data_head%(RING_BUFFER_PAGES * PAGE_SIZE);
+	counter++;
 }
 
 long perf_open(const char* pathname, int flags)

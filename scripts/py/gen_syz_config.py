@@ -62,7 +62,7 @@ class GenSyzConfig(object):
             "--syscalls", action="store_true",
         )
         parser.add_argument(
-            "--type", dest="type",
+            "--driver", dest="driver",
             type=str,
             default="fbdev",
         )
@@ -85,7 +85,7 @@ class GenSyzConfig(object):
         self.proc_num = self.args.proc_num
         self.public_key = self.args.public_key
         self.qemu = self.args.qemu
-        self.type = self.args.type
+        self.driver = self.args.driver
         self.vmcnt = self.args.vmcnt
         self.syscalls = self.args.syscalls
         self.enable_syscalls = ""
@@ -100,7 +100,7 @@ class GenSyzConfig(object):
                     line = line.replace("$OUT_WORK_DIR", str(self.env.out_work_dir))
                     line = line.replace("$BRANCH", self.branch)
                     line = line.replace("$DEVICE", self.device)
-                    line = line.replace("$TYPE", self.type)
+                    line = line.replace("$DRIVER", self.driver)
                     line = line.replace("$BUILD_KERNEL_DIR", str(self.env.build_kernel_dir))
                     line = line.replace("$PROC_NUM", self.proc_num)
                     line = line.replace("$PROJ_DIR", str(self.env.proj_dir))

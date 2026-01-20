@@ -1,6 +1,6 @@
 #! /bin/bash
 
-BUILD_IMAGE_DIR="${BUILD_PATH}/image"
+BUILD_IMAGE_DIR="${BUILD_PATH}/test-image"
 CREATE_IMG="/storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/tools/create-image.sh"
 
 mkdir -p ${BUILD_IMAGE_DIR}

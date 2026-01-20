@@ -1,0 +1,45 @@
+diff --git a/scripts/python/utils/environment.py b/scripts/python/utils/environment.py
+index 7538605..0fadc2b 100644
+--- a/scripts/python/utils/environment.py
++++ b/scripts/python/utils/environment.py
+@@ -4,7 +4,7 @@ import types
+ 
+ def get_env():
+     env = types.SimpleNamespace()
+-    env.home_dir = Path.home()
++    env.home_dir = Path("/storage")
+     env.project_name = 'PrIntFuzz'
+     env.project_dir = env.home_dir / env.project_name
+     env.bin_dir = env.project_dir / 'bin'
+diff --git a/static_analyzer/src/interface/CMakeLists.txt b/static_analyzer/src/interface/CMakeLists.txt
+index 560af9d..cff20e3 100644
+--- a/static_analyzer/src/interface/CMakeLists.txt
++++ b/static_analyzer/src/interface/CMakeLists.txt
+@@ -4,6 +4,7 @@ add_executable(main
+ 
+ target_link_libraries(main
+     Analyzer
++    stdc++fs
+ )
+ 
+ install(TARGETS main)
+diff --git a/static_analyzer/src/interface/main.cpp b/static_analyzer/src/interface/main.cpp
+index 0a3d83b..4cef424 100644
+--- a/static_analyzer/src/interface/main.cpp
++++ b/static_analyzer/src/interface/main.cpp
+@@ -1,5 +1,5 @@
+ #include <memory>
+-#include <filesystem>
++#include <experimental/filesystem>
+ 
+ #include "analyzer/analyzer.h"
+ #include "analyzer/property.h"
+@@ -8,7 +8,7 @@
+ 
+ using json = nlohmann::json;
+ 
+-namespace fs = std::filesystem;
++namespace fs = std::experimental::filesystem;
+ 
+ int main(int argc, char *argv[]) {
+     std::unique_ptr<Analyzer> analyzer;

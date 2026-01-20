@@ -1,17 +1,10 @@
 CC := gcc
 CFLAGS := -Wall
-TARGET := pmi_test
-OBJECT := $(TARGET).o
-SOURCE := $(TARGET).c
-HEADER := ../perf.h ../shmem.h
 
-all: $(TARGET)
+all: pmi_test
 
-$(TARGET): $(OBJECT) ../perf.o ../shmem.o
-	$(CC) -o $@ $^
-
-OBJECT.o: $(SOURCE) $(HEADER)
-	$(CC) -c $<
+pmi_test: pmi_test.c ../agent_lib/libagent.a
+	$(CC) -o pmi_test pmi_test.c -L../agent_lib -l agent
 
 clean:
-	rm $(TARGET)
+	rm pmi_test

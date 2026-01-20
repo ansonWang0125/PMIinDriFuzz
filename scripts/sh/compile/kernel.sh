@@ -16,10 +16,10 @@ usage() {
 
 KERNEL="/storage/PMIinDriFuzz/kernel"
 CONFIG="/storage/PMIinDriFuzz/config/kernel/guest_defconfig"
-BUILD_DIR="/storage/PMIinDriFuzz/build/kernel"
+BUILD_DIR_BASE="/storage/PMIinDriFuzz/build/kernel"
 BRANCH="main"
 DEVICE="pci"
-TYPE="fbdev"
+BUILD_DIR=""
 
 while :
 do
@@ -69,11 +69,17 @@ if [[ ! -d ${KERNEL} || ! -f ${CONFIG} ]]; then
     exit 1
 fi;
 
+if [ "$BUILD_DIR" = "n" ]; then
+    BUILD_DIR=""
+elif [ "$BUILD_DIR" = "" ]; then
+    BUILD_DIR=$BUILD_DIR_BASE/$BRANCH/$DEVICE/
+fi;
+
 mkdir -p $BUILD_DIR
 
-cp $CONFIG $BUILD_DIR/$BRANCH/$DEVICE/$TYPE/.config
+cp $CONFIG $BUILD_DIR/.config
 
 pushd ${KERNEL}
-make olddefconfig O=$BUILD_DIR/$BRANCH/$DEVICE/$TYPE
-make -j40 O=$BUILD_DIR/$BRANCH/$DEVICE/$TYPE
+make olddefconfig O=$BUILD_DIR
+make -j40 O=$BUILD_DIR
 popd

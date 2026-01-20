@@ -8,7 +8,8 @@ sudo apt install -y libcap-dev \
                     libattr1-dev \
                     libglib2.0-dev \
                     libpixman-1-dev \
-                    libiberty-dev
+                    libiberty-dev \
+                    binutils-dev
 mkdir -p ${BUID_DIR}
 
 pushd ${SOURCE_DIR}

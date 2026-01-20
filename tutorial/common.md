@@ -15,3 +15,8 @@ sudo apt-get update
 sudo apt-get install git -y
 git --version
 ```
+
+3. ar usage
+refer to:
+[sample usage](https://www.geeksforgeeks.org/c/how-to-create-a-static-library-in-c/)
+[-l namespace](https://stackoverflow.com/questions/6578484/telling-gcc-directly-to-link-a-library-statically)

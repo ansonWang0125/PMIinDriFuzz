@@ -17,3 +17,4 @@
 1/16 TODO-L4: Find a way to run setup command in vm, run the script in scripts/sh/vm/setup.sh
 1/16 TODO-L4: What is qemu object? what is it use for?
 1/17 TODO-L3: Find a good way to compile multiple file for userspace agent
+1/18 TODO-L2: How git submodule work internally?

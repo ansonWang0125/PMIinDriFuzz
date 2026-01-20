@@ -1,8 +1,11 @@
 CC := gcc
 CFLAGS := -Wall
-TARGETS := perf.o shmem.o agent
+CLEANS := perf.o shmem.o libagent.a
 
-all: $(TARGETS)
+all: libagent.a
+
+libagent.a: shmem.o perf.o
+	ar r libagent.a shmem.o perf.o
 
 perf.o: perf.c perf.h
 	$(CC) -c $<
@@ -10,11 +13,5 @@ perf.o: perf.c perf.h
 shmem.o: shmem.c shmem.h
 	$(CC) -c $<
 
-agent.o: agent.c agent.h
-	$(CC) -c $<
-
-agent: agent.o shmem.o perf.o
-	$(CC) -o $@ $^
-
 clean:
-	rm $(TARGETS)
+	rm $(CLEANS)

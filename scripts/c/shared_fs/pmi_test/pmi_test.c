@@ -1,5 +1,4 @@
-#include "../perf.h"
-#include "../shmem.h"
+#include "../agent_lib/agent_uapi.h"
 #include <stdio.h>
 #include <fcntl.h> 
 #include <linux/random.h>

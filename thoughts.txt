@@ -7,3 +7,10 @@
     can we leverage the Intel PT to tell us the address base,
     and using PMI as a lightweight tools to collect profiling data (compare to Intel PT),
     and using the data to accelerate driver fuzzing (as perf did in user space).
+1/21: Check with professor:
+    Before the end of February: Complete profiling data collection.
+    Before the end of April: Create a training procedure.
+    Before the end of June: Complete checkpoint policy data collection.
+    Before the end of August: Integrate checkpoint acceleration and PMI acceleration.
+    Before the end of October: Complete full project.
+    Before the end of this year: Complete my paper!! Congratulation!

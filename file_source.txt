@@ -1,0 +1,5 @@
+1. /storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/device.json
+    I found that the number of "QEMU Devices" in final.json matched the claim "Moreover, PrIntFuzz could simulate 311(=281+30) PCI devices
+ in total based on QEMU" in paper, and actually what they did in code is listing all qemu emulated devices, analysing the linux driver,
+ if the driver match the qemu device driver, then mark it as qemu support driver, then when evaluate the system, they pass this device as arg to qemu command.
+    Actually when I find the qemu emulated device list, ant it has a attribute named "driver", I can directly use it instead trace the code.

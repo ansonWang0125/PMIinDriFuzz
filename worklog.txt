@@ -35,8 +35,9 @@
 1/20:
     1. Complete share memory structure.
     2. Research the relationship between enabled syscall and qemu emulated device in PrIntFuzz project.
+1/21:
+    1. Get the qemu emulated device list from printfuzz project, knows that which syscalls and devices need to fuzz a driver
 
 DAILY_TODO:
     1. Perf data log flows from PMI handler in kernel to sample handler in userspace to host consumer still need more fluent.
-    2. How the fake device is generated? How does this project generate a set of fake fbdev device to handle all fbdev related syscall,
-        we can know which emulated device that qemu originally supported we should enable in qemu command.
+    2. Clarify "sound" or "net" is the driver type or device type in printfuzz project.

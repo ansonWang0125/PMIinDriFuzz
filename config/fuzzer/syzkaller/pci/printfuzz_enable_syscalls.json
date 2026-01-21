@@ -622,6 +622,226 @@
             "ptp"
         ]
     },
+    "counter": {
+        "syscalls": [
+            "openat$dev_fake_drivers_counter_counter",
+            "write$dev_fake_drivers_counter_counter",
+            "read$dev_fake_drivers_counter_counter",
+            "poll$dev_fake_drivers_counter_counter",
+            "close$dev_fake_drivers_counter_counter",
+            "ioctl$dev_fake_drivers_counter_counter_1",
+            "ioctl$dev_fake_drivers_counter_counter_2",
+            "ioctl$dev_fake_drivers_counter_counter_3",
+            "ioctl$dev_fake_drivers_counter_counter_4",
+            "ioctl$dev_fake_drivers_counter_counter_5",
+            "ioctl$dev_fake_drivers_counter_counter_6"
+        ],
+        "drivers": [
+            "counter"
+        ]
+    },
+    "nosy": {
+        "syscalls": [
+            "openat$dev_fake_drivers_firewire_nosy",
+            "write$dev_fake_drivers_firewire_nosy",
+            "read$dev_fake_drivers_firewire_nosy",
+            "poll$dev_fake_drivers_firewire_nosy",
+            "close$dev_fake_drivers_firewire_nosy",
+            "ioctl$dev_fake_drivers_firewire_nosy_1",
+            "ioctl$dev_fake_drivers_firewire_nosy_2",
+            "ioctl$dev_fake_drivers_firewire_nosy_3",
+            "ioctl$dev_fake_drivers_firewire_nosy_4",
+            "ioctl$dev_fake_drivers_firewire_nosy_5",
+            "ioctl$dev_fake_drivers_firewire_nosy_6",
+            "ioctl$dev_fake_drivers_firewire_nosy_7",
+            "ioctl$dev_fake_drivers_firewire_nosy_8"
+        ],
+        "drivers": [
+            "nosy"
+        ]
+    },
+    "endpoint": {
+        "syscalls": [
+            "openat$dev_fake_drivers_misc_pci_endpoint_test",
+            "write$dev_fake_drivers_misc_pci_endpoint_test",
+            "read$dev_fake_drivers_misc_pci_endpoint_test",
+            "poll$dev_fake_drivers_misc_pci_endpoint_test",
+            "close$dev_fake_drivers_misc_pci_endpoint_test",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_1",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_2",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_3",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_4",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_5",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_6",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_7",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_8",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_9",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_10",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_11",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_12",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_13",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_14",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_15",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_16",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_17",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_18",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_19",
+            "ioctl$dev_fake_drivers_misc_pci_endpoint_test_20"
+        ],
+        "drivers": [
+            "endpoint"
+        ]
+    },
+    "phantom": {
+        "syscalls": [
+            "openat$dev_fake_drivers_misc_phantom",
+            "write$dev_fake_drivers_misc_phantom",
+            "read$dev_fake_drivers_misc_phantom",
+            "poll$dev_fake_drivers_misc_phantom",
+            "close$dev_fake_drivers_misc_phantom",
+            "ioctl$dev_fake_drivers_misc_phantom_1",
+            "ioctl$dev_fake_drivers_misc_phantom_2",
+            "ioctl$dev_fake_drivers_misc_phantom_3",
+            "ioctl$dev_fake_drivers_misc_phantom_4",
+            "ioctl$dev_fake_drivers_misc_phantom_5",
+            "ioctl$dev_fake_drivers_misc_phantom_6",
+            "ioctl$dev_fake_drivers_misc_phantom_7",
+            "ioctl$dev_fake_drivers_misc_phantom_8",
+            "ioctl$dev_fake_drivers_misc_phantom_9",
+            "ioctl$dev_fake_drivers_misc_phantom_10",
+            "ioctl$dev_fake_drivers_misc_phantom_11",
+            "ioctl$dev_fake_drivers_misc_phantom_12",
+            "ioctl$dev_fake_drivers_misc_phantom_13",
+            "ioctl$dev_fake_drivers_misc_phantom_14",
+            "ioctl$dev_fake_drivers_misc_phantom_15",
+            "ioctl$dev_fake_drivers_misc_phantom_16",
+            "ioctl$dev_fake_drivers_misc_phantom_17",
+            "ioctl$dev_fake_drivers_misc_phantom_18"
+        ],
+        "drivers": [
+            "phantom"
+        ]
+    },
+    "switchtec": {
+        "syscalls": [
+            "openat$dev_fake_drivers_pci_switch_switchtec",
+            "write$dev_fake_drivers_pci_switch_switchtec",
+            "read$dev_fake_drivers_pci_switch_switchtec",
+            "poll$dev_fake_drivers_pci_switch_switchtec",
+            "close$dev_fake_drivers_pci_switch_switchtec",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_1",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_2",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_3",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_4",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_5",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_6",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_7",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_8",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_9",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_10",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_11",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_12",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_13",
+            "ioctl$dev_fake_drivers_pci_switch_switchtec_14"
+        ],
+        "drivers": [
+            "switchtec"
+        ]
+    },
+    "nozomi": {
+        "syscalls": [
+            "syz_open_dev$dev_fake_drivers_tty_nozomi",
+            "write$dev_fake_drivers_tty_nozomi",
+            "read$dev_fake_drivers_tty_nozomi",
+            "poll$dev_fake_drivers_tty_nozomi",
+            "close$dev_fake_drivers_tty_nozomi",
+            "ioctl$dev_fake_drivers_tty_nozomi_1",
+            "ioctl$dev_fake_drivers_tty_nozomi_2"
+        ],
+        "drivers": [
+            "nozomi"
+        ]
+    },
+    "synclink_gt": {
+        "syscalls": [
+            "openat$dev_fake_drivers_tty_synclink_gt",
+            "write$dev_fake_drivers_tty_synclink_gt",
+            "read$dev_fake_drivers_tty_synclink_gt",
+            "poll$dev_fake_drivers_tty_synclink_gt",
+            "close$dev_fake_drivers_tty_synclink_gt",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_1",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_2",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_3",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_4",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_5",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_6",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_7",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_8",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_9",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_10",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_11",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_12",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_13",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_14",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_15",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_16",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_17",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_18",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_19",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_20",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_21",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_22",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_23",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_24",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_25",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_26",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_27",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_28",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_29",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_30",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_31",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_32",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_33",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_34",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_35",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_36",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_37",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_38",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_39",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_40",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_41",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_42",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_43",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_44",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_45",
+            "ioctl$dev_fake_drivers_tty_synclink_gt_46"
+        ],
+        "drivers": [
+            "synclink_gt"
+        ]
+    },
+    "mxser": {
+        "syscalls": [
+            "syz_open_dev$dev_fake_drivers_tty_mxser",
+            "write$dev_fake_drivers_tty_mxser",
+            "read$dev_fake_drivers_tty_mxser",
+            "poll$dev_fake_drivers_tty_mxser",
+            "close$dev_fake_drivers_tty_mxser",
+            "ioctl$dev_fake_drivers_tty_mxser_1",
+            "ioctl$dev_fake_drivers_tty_mxser_2",
+            "ioctl$dev_fake_drivers_tty_mxser_3",
+            "ioctl$dev_fake_drivers_tty_mxser_4",
+            "ioctl$dev_fake_drivers_tty_mxser_5",
+            "ioctl$dev_fake_drivers_tty_mxser_6",
+            "ioctl$dev_fake_drivers_tty_mxser_7",
+            "ioctl$dev_fake_drivers_tty_mxser_8",
+            "ioctl$dev_fake_drivers_tty_mxser_9",
+            "ioctl$dev_fake_drivers_tty_mxser_10"
+        ],
+        "drivers": [
+            "mxser"
+        ]
+    },
     "watchdog": {
         "syscalls": [
             "openat$dev_watchdog",

@@ -38,8 +38,8 @@ tasks:
       - ${SH_PATH}/run/vm.sh
   run-syzkaller:
       - echo "Running syzkaller..."
-      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --output ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg
-      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg -debug
+      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver pcnet32 --driver_type pci
+      # - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg -debug
   reload-env:
     cmds:
       - echo "Reloading env..."

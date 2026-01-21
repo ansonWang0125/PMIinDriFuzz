@@ -18,110 +18,59 @@ class GenSyzConfig(object):
         parser.add_argument(
             "--branch", dest="branch",
             type=str,
-            default="main",
-        )
-        parser.add_argument(
-            "--device", dest="device",
-            type=str,
-            default="pci",
-        )
-        parser.add_argument(
-            "--host", dest="host",
-            type=str,
-            default="localhost",
-        )
-        parser.add_argument(
-            "--image", dest="image",
-            type=str,
-            default="stretch.img",
-        )
-        parser.add_argument(
-            "--output", dest="output",
-            type=str,
-            required=True,
-        )
-        parser.add_argument(
-            "--port", dest="port",
-            type=str,
-            default="56841",
-        )
-        parser.add_argument(
-            "--proc_num", dest="proc_num",
-            type=str,
-            default="1",
-        )
-        parser.add_argument(
-            "--public_key", dest="public_key",
-            type=str,
-            default="stretch.id_rsa",
-        )
-        parser.add_argument(
-            "--qemu", action="store_true",
-        )
-        parser.add_argument(
-            "--syscalls", action="store_true",
         )
         parser.add_argument(
             "--driver", dest="driver",
             type=str,
-            default="fbdev",
         )
         parser.add_argument(
-            "--vmcnt", dest="vmcnt",
+            "--driver_type", dest="driver_type",
             type=str,
-            default="1",
         )
         self.args = parser.parse_args(args)
 
     def __process_args(self):
-        self.input = "/storage/PMIinDriFuzz/config/fuzzer/syzkaller/template.cfg"
-        self.qemu_args = "qemu-system-x86_64 -m 512 -smp"
-        self.branch = self.args.branch
-        self.device = self.args.device
-        self.host = self.args.host
-        self.image = self.args.image
-        self.output = self.args.output
-        self.port = self.args.port
-        self.proc_num = self.args.proc_num
-        self.public_key = self.args.public_key
-        self.qemu = self.args.qemu
-        self.driver = self.args.driver
-        self.vmcnt = self.args.vmcnt
-        self.syscalls = self.args.syscalls
-        self.enable_syscalls = ""
+        with open(f"/storage/PMIinDriFuzz/config/fuzzer/syzkaller/{self.args.driver_type}/dritype2syscall.json", "w") as fd:
+            dritype2syscall = json.loads(fd.read())
+        with open(f"/storage/PMIinDriFuzz/config/fuzzer/syzkaller/{self.args.driver_type}/dri2dev.json", "w") as fd:
+            dri2dev = json.loads(fd.read())
+        for driver_type, syscall in dritype2syscall.item():
+            if self.args.driver_type == driver_type:
+                self.syscall_list =  self.args.syscall_list
+        for driver_path, device_list in dri2dev.item():
+            if self.args.driver_type in driver:
+                self.device = device_list[0]
 
-    def __replace_config(self):
-        with open(self.input, "r") as infd:
-            with open(self.output, "w") as outfd:
-                outfd.truncate()
-                for line in infd.readlines():
-                    line = line.replace("$HOST", self.host)
-                    line = line.replace("$PORT", self.port)
-                    line = line.replace("$OUT_WORK_DIR", str(self.env.out_work_dir))
-                    line = line.replace("$BRANCH", self.branch)
-                    line = line.replace("$DEVICE", self.device)
-                    line = line.replace("$DRIVER", self.driver)
-                    line = line.replace("$BUILD_KERNEL_DIR", str(self.env.build_kernel_dir))
-                    line = line.replace("$PROC_NUM", self.proc_num)
-                    line = line.replace("$PROJ_DIR", str(self.env.proj_dir))
-                    line = line.replace("$BUILD_DIR", str(self.env.build_dir))
-                    line = line.replace("$IMAGE", self.image)
-                    line = line.replace("$BUILD_IMAGE_DIR", str(self.env.build_image_dir))
-                    line = line.replace("$PUBLIC_KEY", self.public_key)
-                    line = line.replace("$SYZKALLER", str(self.env.syzkaller))
-                    line = line.replace("$ENABLE_SYSCALLS", self.enable_syscalls)
-                    line = line.replace("$VMCNT", self.vmcnt)
-                    line = line.replace("$BIN_QEMU_DIR", str(self.env.bin_qemu_dir))
-                    line = line.replace("$QEMU_ARGS", self.qemu_args)
-                    if not self.qemu and ( "qemu_args" in line or "qemu-system-x86_64" in line ):
-                        continue
-                    if not self.syscalls and "enable_syscalls" in line:
-                        continue
-                    outfd.write(line)
+    def __gen_config(self):
+        self.config['target'] = 'linux/amd64'
+        self.config['http'] = 'localhost:amd64'
+        self.config['workdir'] = str(self.env.out_work_dir / f"{self.args.branch}/{self.args.driver_type}/{self.args.driver}")
+        self.config['kernel_obj'] = str(self.env.build_kernel_dir / f"{self.args.branch}/{self.args.driver_type}")
+        self.config['kernel_src'] = str(self.env.proj_name / f"/{self.args.branch}")
+        self.config['image'] = str(self.env.build_image_dir / f"/stretch.img")
+        self.config['sshkey'] = str(self.env.build_image_dir / f"/stretch.id_rsa")
+        self.config['syzkaller'] = str(self.env.syzkaller)
+        self.config['procs'] = 1
+        self.config['type'] = 'qemu'
+        self.config['sandbox'] = 'none'
+        self.config['reproduce'] = True
+        self.config['cover'] = True
+        self.config['enable_syscalls'] = self.syscall_list
+        self.config['vm'] = {}
+        self.config['vm']['count'] = 1
+        self.config['vm']['kernel'] = str(self.env.build_kernel_dir / f"{self.args.branch}/{self.args.device_type}" / 'arch/x86/boot/bzImage')
+        self.config['vm']['cpu'] = 1
+        self.config['vm']['mem'] = 512
+        qemu_args = '--enable-kvm '
+        qemu_args += f'-device {self.device} '
+        qemu_args += (f"-fsdev local,id=fsdev0,path={self.syz_device_dir},security_model=none "
+                "-device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare ")
+        self.config['vm']['qemu_args'] = qemu_args
+        self.config['vm']['qemu'] = str(self.env.build_qemu_dir / f'bin/qemu-system-x86_64')
+        print(self.config)
 
     def process(self):
-        print("Start process!")
-        self.__replace_config()
+        self.__gen_config()
 
 if __name__ == '__main__':
     genSyzConfig = GenSyzConfig(sys.argv[1:])

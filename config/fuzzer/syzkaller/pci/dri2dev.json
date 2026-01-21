@@ -1,0 +1,147 @@
+{
+    "drivers/ata/ahci.bc": [
+        "ich9-ahci"
+    ],
+    "drivers/ata/ata_piix.bc": [
+        "piix3-ide",
+        "piix3-ide-xen",
+        "piix4-ide"
+    ],
+    "drivers/gpu/drm/tiny/bochs.bc": [
+        "bochs-display",
+        "secondary-vga"
+    ],
+    "drivers/ipack/carriers/tpci200.bc": [
+        "tpci200"
+    ],
+    "drivers/message/fusion/mptsas.bc": [
+        "mptsas1068"
+    ],
+    "drivers/mmc/host/sdhci-pci.bc": [
+        "sdhci-pci"
+    ],
+    "drivers/net/ethernet/8390/ne2k-pci.bc": [
+        "ne2k_pci"
+    ],
+    "drivers/net/ethernet/amd/pcnet32.bc": [
+        "pcnet"
+    ],
+    "drivers/net/ethernet/dec/tulip/tulip.bc": [
+        "tulip"
+    ],
+    "drivers/net/ethernet/intel/e100.bc": [
+        "i82550",
+        "i82551",
+        "i82557a",
+        "i82557b",
+        "i82557c",
+        "i82558a",
+        "i82558b",
+        "i82559a",
+        "i82559b",
+        "i82559c",
+        "i82559er",
+        "i82562",
+        "i82801"
+    ],
+    "drivers/net/ethernet/intel/e1000/e1000.bc": [
+        "e1000",
+        "e1000-82544gc",
+        "e1000-82545em"
+    ],
+    "drivers/net/ethernet/intel/e1000e/e1000e.bc": [
+        "e1000e"
+    ],
+    "drivers/net/ethernet/realtek/8139cp.bc": [
+        "rtl8139"
+    ],
+    "drivers/net/ethernet/rocker/rocker.bc": [
+        "rocker"
+    ],
+    "drivers/net/vmxnet3/vmxnet3.bc": [
+        "vmxnet3"
+    ],
+    "drivers/pci/pcie/portdrv_pci.bc": [
+        "ioh3420",
+        "pcie-root-port",
+        "x3130-upstream",
+        "xio3130-downstream"
+    ],
+    "drivers/scsi/am53c974.bc": [
+        "am53c974",
+        "dc390"
+    ],
+    "drivers/scsi/megaraid/megaraid_sas.bc": [
+        "megasas",
+        "megasas-gen2"
+    ],
+    "drivers/scsi/sym53c8xx_2/sym53c8xx.bc": [
+        "lsi53c810",
+        "lsi53c895a"
+    ],
+    "drivers/scsi/vmw_pvscsi.bc": [
+        "pvscsi"
+    ],
+    "drivers/tty/serial/8250/8250_pci.bc": [
+        "pci-serial",
+        "pci-serial-2x",
+        "pci-serial-4x"
+    ],
+    "drivers/usb/host/ehci-pci.bc": [
+        "ich9-usb-ehci1",
+        "ich9-usb-ehci2",
+        "usb-ehci"
+    ],
+    "drivers/usb/host/ohci-pci.bc": [
+        "pci-ohci"
+    ],
+    "drivers/usb/host/uhci-hcd.bc": [
+        "ich9-usb-uhci1",
+        "ich9-usb-uhci2",
+        "ich9-usb-uhci3",
+        "ich9-usb-uhci4",
+        "ich9-usb-uhci5",
+        "ich9-usb-uhci6",
+        "piix3-usb-uhci",
+        "piix4-usb-uhci",
+        "vt82c686b-usb-uhci"
+    ],
+    "drivers/usb/host/xhci-pci.bc": [
+        "nec-usb-xhci",
+        "qemu-xhci"
+    ],
+    "drivers/virtio/virtio_pci.bc": [
+        "virtio-scsi-pci",
+        "virtio-scsi-pci-non-transitional",
+        "virtio-scsi-pci-transitional",
+        "virtio-net-pci",
+        "virtio-net-pci-non-transitional",
+        "virtio-net-pci-transitional",
+        "virtio-keyboard-pci",
+        "virtio-mouse-pci",
+        "virtio-serial-pci",
+        "virtio-serial-pci-non-transitional",
+        "virtio-serial-pci-transitional",
+        "virtio-tablet-pci",
+        "virtio-gpu-pci",
+        "virtio-balloon-pci",
+        "virtio-balloon-pci-non-transitional",
+        "virtio-balloon-pci-transitional",
+        "virtio-rng-pci",
+        "virtio-rng-pci-non-transitional",
+        "virtio-rng-pci-transitional"
+    ],
+    "drivers/watchdog/i6300esb.bc": [
+        "i6300esb"
+    ],
+    "sound/pci/hda/snd-hda-intel.bc": [
+        "ich9-intel-hda",
+        "intel-hda"
+    ],
+    "sound/pci/snd-ens1370.bc": [
+        "ES1370"
+    ],
+    "sound/pci/snd-intel8x0.bc": [
+        "AC97"
+    ]
+}

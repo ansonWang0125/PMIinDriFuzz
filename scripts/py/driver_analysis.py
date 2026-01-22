@@ -17,32 +17,25 @@ def get_pci_id():
     print(pci_ids)
     print(id_counter)
 
-def get_qemu_id():
-    qemu_dev_ids = {}
+def get_driver_setup():
+    driver_setup = {}
     with open("/storage/PMIinDriFuzz/out/json/final.json", "r") as fd:
         final_dict = json.loads(fd.read())
-    for driver_source_abs, driver_info in final_dict.items():
-        if "QEMU Devices" in driver_info.keys() and driver_info["QEMU Devices"] is not None:
-            driver_source_rel = driver_source_abs.replace("/storage/PrIntFuzz/build/linux/linux_allmodconfig/", "")
-            qemu_dev_ids[driver_source_rel] = driver_info["QEMU Devices"]
-    with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/device.json", "w") as fd:
-        json.dump(qemu_dev_ids, fd, indent=4)
-
-def driverType2syscall():
-    sys2dev_data = {}
-    tmp_dict = {}
-    with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/dri2dev.json", "r") as fd:
-        dri2dev_dic = json.loads(fd.read())
     with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/printfuzz_enable_syscalls.json", "r") as fd:
         enablesys_dic = json.loads(fd.read())
-    for device_sys in enablesys_dic.values():
-        for dri_path in dri2dev_dic.keys():
-            print(device_sys["drivers"][0])
-            if device_sys["drivers"][0] in dri_path:
-                tmp_dict["syscalls"] = device_sys["syscalls"]
-                sys2dev_data[device_sys["drivers"][0]] = tmp_dict["syscalls"]
-    with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/dritype2syscall.json", "w") as fd:
-        json.dump(sys2dev_data, fd, indent=4)
+    for driver_info in final_dict.values():
+        if "QEMU Devices" in driver_info.keys() and driver_info["QEMU Devices"] is not None:
+            driver_source_rel = driver_info["Source File"].replace("/storage/PrIntFuzz/third_party/linux/", "")
+            if driver_source_rel not in driver_setup.keys():
+                driver_setup[driver_source_rel] = {}
+            driver_setup[driver_source_rel]["devices"] = driver_info["QEMU Devices"]
+    for value in enablesys_dic.values():
+        for dri_path in driver_setup.keys():
+            for subsystem in value["drivers"]:
+                if subsystem in dri_path:
+                    driver_setup[dri_path]["syscalls"] = value["syscalls"]
+    with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/driver_setup.json", "w") as fd:
+        json.dump(driver_setup, fd, indent=4)
 
 if __name__ == '__main__':
-    driverType2syscall()
+    get_driver_setup()

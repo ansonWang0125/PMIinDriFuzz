@@ -37,7 +37,9 @@
     2. Research the relationship between enabled syscall and qemu emulated device in PrIntFuzz project.
 1/21:
     1. Get the qemu emulated device list from printfuzz project, knows that which syscalls and devices need to fuzz a driver
+1/22:
+    1. Got the correlation between driver to syscall and device.
 
 DAILY_TODO:
     1. Perf data log flows from PMI handler in kernel to sample handler in userspace to host consumer still need more fluent.
-    2. Clarify "sound" or "net" is the driver type or device type in printfuzz project.
+    2. Why the VM can get a instances?

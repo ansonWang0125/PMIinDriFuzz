@@ -20,7 +20,6 @@ class Environment(object):
         self.env.build_image_dir = self.env.build_dir / 'image'
         self.env.build_kernel_dir = self.env.build_dir / 'kernel'
         self.env.build_qemu_dir = self.env.build_dir / 'qemu'
-        self.env.build_image_dir = self.env.build_dir / 'image'
         self.env.bin_qemu_dir = self.env.bin_dir / 'qemu'
         # TODO-L4: Find a way to avoid syzkaller place in a strange path.
         self.env.syzkaller = Path("/storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller")

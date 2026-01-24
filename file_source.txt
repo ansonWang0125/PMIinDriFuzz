@@ -5,4 +5,7 @@
     Actually when I find the qemu emulated device list, ant it has a attribute named "driver", I can directly use it instead trace the code.
 2. /storage/PMIinDriFuzz/config/kernel/guest_defconfig
    the .config file in guest_kernel after executed make defconfig / make kvm_guest.config 
-3. /storage/PMIinDriFuzz/config/kernel/enable/pci/
+3. /storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/final.json
+   the static analysis result from printfuzz, I dont't want to rebuild the printfuzz every time I need pci driver related info.
+4. /storage/PMIinDriFuzz/config/kernel/enable/pci.json
+   refer to printfuzz file_to_config.py, extract config from final.json

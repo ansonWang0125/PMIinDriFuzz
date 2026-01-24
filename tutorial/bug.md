@@ -29,6 +29,11 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
     I replace the system installed qemu executable to my compiled qemu, then run the original guest kernel image / fs image, It crash at init. I rebuild the qemu from official stable commit (original run on my own commit) and rebuild the fs image, this bug fix.
     TODO_L3: I guess the problem is fs image isn't formatted (image is modified so that my qemu command can't recognize it.).
 
+# Syzkaller
+    1. open(proc/self/ns/net) error number 2
+        The enable_syscall list (config/linux/enable_config.json) in printfuzz for some reason not enable CONFIG_NET_NS, simply add to enable config list in pci
+    2. machine check: got no fallback coverage:
+        The syzkaller not support CONFIG_KCOV_INSTRUMENT_ALL disable fuzzing, so agamotto and printfuzz choose to close the error when syzkaller generate test syscall to test executor.
 # fcntl
 1. error: `F_SETSIG' undeclared (first use in this function)
     sol: [debian report](https://lists.debian.org/debian-amd64/2005/02/msg00765.html) define _GNU_SOURCE  TODO_L3: what is _GNU_SOURCE

@@ -19,3 +19,5 @@
 1/17 TODO-L3: Find a good way to compile multiple file for userspace agent
 1/18 TODO-L2: How git submodule work internally?
 1/21 TODO-L4: What the different between json.dumps and json.dump
+1/22 TODO-L3: What is fuse? how mount in kernel work, and what are the functionalities provided by daemon and how did it works?
+1/24 TODO-L4: Perf data log flows from PMI handler in kernel to sample handler in userspace to host consumer still need more fluent.

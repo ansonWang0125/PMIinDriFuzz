@@ -44,7 +44,7 @@ class GenSyzConfig(object):
         self.config['http'] = 'localhost:56841'
         self.config['workdir'] = str(self.env.out_work_dir / f"{self.args.branch}/{self.args.driver_type}/{self.args.driver}")
         self.config['kernel_obj'] = str(self.env.build_kernel_dir / f"{self.args.branch}/{self.args.driver_type}")
-        self.config['kernel_src'] = str(self.env.proj_dir / f"{self.args.branch}")
+        self.config['kernel_src'] = str(self.env.guest_kernel_dir)
         self.config['image'] = str(self.env.build_image_dir / f"stretch.img")
         self.config['sshkey'] = str(self.env.build_image_dir / f"stretch.id_rsa")
         self.config['syzkaller'] = str(self.env.syzkaller)
@@ -58,7 +58,7 @@ class GenSyzConfig(object):
         self.config['vm']['count'] = 1
         self.config['vm']['kernel'] = str(self.env.build_kernel_dir / f"{self.args.branch}/{self.args.driver_type}" / 'arch/x86/boot/bzImage')
         self.config['vm']['cpu'] = 1
-        self.config['vm']['mem'] = 512
+        self.config['vm']['mem'] = 4096
         qemu_args = '--enable-kvm '
         qemu_args += f'-device {self.devices[0]} -cpu host'
         self.config['vm']['qemu_args'] = qemu_args

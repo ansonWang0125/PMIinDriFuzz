@@ -40,6 +40,10 @@ do
             CONFIG="$2"
             shift 2
             ;;
+        -d | --device)
+            DEVICE="$2"
+            shift 2
+            ;;
         -h | --help)
             usage ""
             exit 1
@@ -80,7 +84,7 @@ mkdir -p $BUILD_DIR
 cp $CONFIG $BUILD_DIR/.config
 
 pushd ${KERNEL}
-make kvm_guest.config O=$BUILD_DIR
+# make kvm_guest.config O=$BUILD_DIR
 make olddefconfig O=$BUILD_DIR
 make -j40 O=$BUILD_DIR
 popd

@@ -12,6 +12,7 @@ qemu-system-x86_64 \
     -cpu host,pmu=true \
     -s \
     -hda "/storage/PMIinDriFuzz/build/test-image/stretch.img" \
+    -device bochs-display\
     -device ivshmem-plain,memdev=perf_record \
     -object memory-backend-file,id=perf_record,share=on,mem-path=/dev/shm/perf_record,size="1M" \
     -virtfs local,path=/storage/PMIinDriFuzz/scripts/c/shared_fs/,mount_tag="shared",security_model="mapped" \

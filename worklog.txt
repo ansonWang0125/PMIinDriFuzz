@@ -39,7 +39,12 @@
     1. Get the qemu emulated device list from printfuzz project, knows that which syscalls and devices need to fuzz a driver
 1/22:
     1. Got the correlation between driver to syscall and device.
+1/23:
+    1. I found that the qemu_args key in sys-manager config will replace the "QemuArgs" default value in syzkaller source code,
+        which originally provide "-cpu host" option in qemu command
+    2. Fix the pci defconfig, which also have the bug " /sys/fuze/connection" as bug file said.
 
 DAILY_TODO:
     1. Perf data log flows from PMI handler in kernel to sample handler in userspace to host consumer still need more fluent.
-    2. Why the VM can get a instances?
+    2. There are some bugs to execute syscaller, fix it.
+    3. Research the kAFL source code to find how they patch the panic handler. Read the kAFL paper and think about the OS agnostic problem in the paper.

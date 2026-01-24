@@ -60,10 +60,10 @@ class GenSyzConfig(object):
         self.config['vm']['cpu'] = 1
         self.config['vm']['mem'] = 512
         qemu_args = '--enable-kvm '
-        qemu_args += f'-device {self.devices[0]} '
+        qemu_args += f'-device {self.devices[0]} -cpu host'
         self.config['vm']['qemu_args'] = qemu_args
         self.config['vm']['qemu'] = str(self.env.build_qemu_dir / "install/bin/qemu-system-x86_64")
-        with open(f"/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/{self.args.driver}.cfg", "w") as fd:
+        with open(f"/storage/PMIinDriFuzz/config/fuzzer/syzkaller/{self.args.driver_type}/{self.args.driver}.cfg", "w") as fd:
             json.dump(self.config, fd, indent=4)
 
     def process(self):

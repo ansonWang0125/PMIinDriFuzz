@@ -25,6 +25,9 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
         make defconfig
         make kvm_guest.config
     TODO_L3: What config included in kvm_guest.config but excluded in defconfig
+3. Segmentation fault at init:
+    I replace the system installed qemu executable to my compiled qemu, then run the original guest kernel image / fs image, It crash at init. I rebuild the qemu from official stable commit (original run on my own commit) and rebuild the fs image, this bug fix.
+    TODO_L3: I guess the problem is fs image isn't formatted (image is modified so that my qemu command can't recognize it.).
 
 # fcntl
 1. error: `F_SETSIG' undeclared (first use in this function)

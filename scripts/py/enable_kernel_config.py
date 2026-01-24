@@ -13,6 +13,7 @@ target_config = ""
 def _enable_config(mode, config_name, config_status=''):
     cmd = (f'{linux_config_tool} --file '
             f'{target_config} -{mode} {config_name} {config_status}')
+    print(f"toggle {config_name}")
     subprocess.run(cmd, shell=True)
 
 def enable_config():

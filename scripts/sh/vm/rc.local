@@ -3,8 +3,8 @@
 # Execute this script in VM!
 
 # TODO_L3: Find a way to execute command when kernel booting, VM_SETUP
-apt-get install build-essential -y --allow-unauthenticated
-apt-get install pciutils -y --allow-unauthenticated
-apt-get install tree -y --allow-unauthenticated
-mkdir -p /mnt/shared 
-mount -t 9p -o trans=virtio,version=9p2000.L shared /mnt/shared
+# apt-get install build-essential -y --allow-unauthenticated
+# apt-get install pciutils -y --allow-unauthenticated
+# apt-get install tree -y --allow-unauthenticated
+# mkdir -p /mnt/shared 
+# mount -t 9p -o trans=virtio,version=9p2000.L shared /mnt/shared

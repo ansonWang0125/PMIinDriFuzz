@@ -45,7 +45,9 @@
     2. Fix the pci defconfig, which also have the bug " /sys/fuze/connection" as bug file said.
 1/24:
     1. Successfully runs the PCI fuzzing
-
+1/25:
+    1. Trace the syzkaller executor code, attemp to modify the syscall function to call the perf lib
 DAILY_TODO:
-    1. Create a lib to provide the fuzzer userspace agent to call the perf event and record the perf data to shared memory.
-    2. Modify the syzkaller executor to call this lib.
+    1. Extend the expires time in cloud lab.
+    2. Create a lib to provide the fuzzer userspace agent to call the perf event and record the perf data to shared memory.
+    3. The executor can't link the agent lib in host, find the reason.

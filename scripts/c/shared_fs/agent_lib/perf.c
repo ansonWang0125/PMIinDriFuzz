@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <sys/syscall.h>
 #include <linux/perf_event.h> 
-#include <stdint.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -181,7 +180,7 @@ static void sample_handler(int sig_num,siginfo_t *sig_info,void *context)
 		sig_counter += 1;
 		if(shared_memory != NULL && sample->header.type==PERF_RECORD_SAMPLE) {
 			printf("Writing shared memory, sig_counter: %d\n", sig_counter);
-			printf("handle sample, tail: %lx, head: %lx\n", rinfo->data_tail, rinfo->data_head);
+			printf("handle sample, tail: %llx, head: %llx\n", rinfo->data_tail, rinfo->data_head);
 			for (i = 0; i < LBR_NUM; i++){
 				write_shared_mem((int64_t)(sample->lbrs[i].from));
 				write_shared_mem((int64_t)(sample->lbrs[i].to));
@@ -234,4 +233,12 @@ long perf_ioctl(int fd, int cmd, ...)
 
 	close(perf_fd);
 	return ret;
+}
+
+// intptr_t perf_syscall(int sys_nr, intptr_t a1, intptr_t a2, intptr_t a3, intptr_t a4, intptr_t a5, intptr_t a6)
+long perf_syscall(int sys_nr, long a1, long a2, long a3, long a4, long a5, long a6)
+{
+	intptr_t hello_world = 1;
+	printf("[perf] perf_syscall, hello world is %ld\n", hello_world);
+	return hello_world;
 }

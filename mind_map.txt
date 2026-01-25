@@ -1,0 +1,21 @@
+Build a OS-agnostic & fuzzer-agnostic fuzzing acceleretor
+    1. What to accelerate?
+        the fuzzing loop
+    2. When to accelerate?
+        during fuzzing loop
+    3. Where to accelerate?
+        in guest
+    4. Why to accelerate?
+        Checkpoint policy in agamotto is heuristic, there's space to optimization.
+    5. Who will use acceleration technique?
+        Driver tester
+    6. How to accelerate?
+        use PMI
+
+Detail:
+1. 
+2.
+3. 
+4.
+5.
+6.

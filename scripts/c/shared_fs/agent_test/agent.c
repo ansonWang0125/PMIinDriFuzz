@@ -1,21 +1,15 @@
-#include "./agent.h"
-#include "./shmem.h"
-#include <sys/mman.h>
+#include "../agent_lib/agent_uapi.h"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#define MSG_LEN sizeof(char) * 20
+#include <fcntl.h> 
+#include <linux/random.h>
+#include <stdio.h>
 
 int main(){
-    void* write_offset = NULL;
+    // Refer to drivers/char/random.c random_ioctl
     map_shared_mem();
-    write_offset = shared_memory.start_addr + PERF_MEM_SIZE - MSG_LEN;
-    strcpy((char *)write_offset, "HELLO WORLD!");
-    printf("Writing, first line of shared memory is: %s\n", (char *)write_offset);
-    munmap(shared_memory.start_addr, PERF_MEM_SIZE);
-    map_shared_mem();
-    write_offset = shared_memory.start_addr + PERF_MEM_SIZE - MSG_LEN;
-    printf("After write, first line of shared memory is: %s\n", (char *)write_offset);
-    munmap(shared_memory.start_addr, PERF_MEM_SIZE);
+    int fd = perf_open("/dev/random", O_RDONLY);
+    int ret = perf_ioctl(fd, RNDGETENTCNT);
+    if (ret) printf("ioctl error\n");
+    umap_shared_mem();
+    return 0;
 }

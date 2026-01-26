@@ -236,9 +236,13 @@ long perf_ioctl(int fd, int cmd, ...)
 }
 
 // intptr_t perf_syscall(int sys_nr, intptr_t a1, intptr_t a2, intptr_t a3, intptr_t a4, intptr_t a5, intptr_t a6)
-long perf_syscall(int sys_nr, long a1, long a2, long a3, long a4, long a5, long a6)
+long perf_syscall(int sys_nr, long a0, long a1, long a2, long a3, long a4, long a5)
 {
-	intptr_t hello_world = 1;
-	printf("[perf] perf_syscall, hello world is %ld\n", hello_world);
-	return hello_world;
+	long ret = 0;
+	perf_setup();
+	perf_prologue(sys_nr);
+	ret = syscall(sys_nr, a0, a1, a2, a3, a4, a5);
+	perf_epilogue();
+	close(perf_fd);
+	return ret;
 }

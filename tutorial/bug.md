@@ -37,4 +37,7 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
 # fcntl
 1. error: `F_SETSIG' undeclared (first use in this function)
     sol: [debian report](https://lists.debian.org/debian-amd64/2005/02/msg00765.html) define _GNU_SOURCE  TODO_L3: what is _GNU_SOURCE
+# gcc
+1. undefine reference to static link library.
+    I try to link my perf agent library(generic c code) to syz-executor in host, but I got undefined reference, the problem is executor.cc is a cpp code, and it can't directly link a c library because it need more information than function name (see [stack_overflow](https://stackoverflow.com/questions/1068129/c-library-not-linking-using-gcc-g)).
 

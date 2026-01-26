@@ -47,7 +47,11 @@
     1. Successfully runs the PCI fuzzing
 1/25:
     1. Trace the syzkaller executor code, attemp to modify the syscall function to call the perf lib
+1/26:
+    1. We have to use UIO to handle the ivshmem because we can't know what exactly the sys proc path in guest vm. I find a sample module, and try to understand it.
+    2. executor can link my perf_lib
 DAILY_TODO:
-    1. Extend the expires time in cloud lab.
+    1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Create a lib to provide the fuzzer userspace agent to call the perf event and record the perf data to shared memory.
     3. The executor can't link the agent lib in host, find the reason.
+    4. Research why we need vmcall in perf_agent.

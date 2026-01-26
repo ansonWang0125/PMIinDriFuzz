@@ -22,3 +22,4 @@
 1/22 TODO-L3: What is fuse? how mount in kernel work, and what are the functionalities provided by daemon and how did it works?
 1/24 TODO-L4: Perf data log flows from PMI handler in kernel to sample handler in userspace to host consumer still need more fluent.
 1/25 TODO-L1: syz-executor need to enable perf and record the perf data to shared memory, but our goal is fuzzer agnostic, so the ideal way is using ptrace to intercept all syscall then enable perf functionality. Now we call the perf lib in shared_fs to record syscall perf data.
+1/25 TODO-L1: Make sure our perf_lib contains only generic code, because it should be executed in guest VM.

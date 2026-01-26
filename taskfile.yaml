@@ -40,7 +40,7 @@ tasks:
       - echo "Running syzkaller..."
       - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type pci
       - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/pci/bochs.cfg -debug
-  test:
+  executor:
       - make -C /storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/ executor
       - scp -P 1569 -i /storage/PMIinDriFuzz/build/test-image/stretch.id_rsa /storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/bin/linux_amd64/syz-executor root@localhost:/syz-executor
   reload-env:

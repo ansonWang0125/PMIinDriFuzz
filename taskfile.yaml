@@ -23,7 +23,7 @@ tasks:
   compile-guest:
     cmds:
       - echo "Compiling guest kernel..."
-      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/guest-kernel -c ${PROJ_PATH}/config/kernel/guest_pci_defconfig -d pci
+      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/guest-kernel -c ${PROJ_PATH}/config/kernel/guest_defconfig -d def
   compile-qemu:
     cmds:
       - echo "Compiling qemu..."
@@ -32,6 +32,10 @@ tasks:
     cmds:
       - echo "Compiling syzkaller..."
       - ${SH_PATH}/compile/syzkaller.sh
+  install-modules:
+    cmds:
+      - ${SH_PATH}/install/module.sh -b /storage/PMIinDriFuzz/build/kernel/main/def
+      - ${SH_PATH}/vm/copy-modules.sh /storage/PMIinDriFuzz/build/kernel/image /storage/PMIinDriFuzz/build/image/stretch.img
   run-vm:
     cmds:
       - echo "Running vm..."
@@ -40,9 +44,9 @@ tasks:
       - echo "Running syzkaller..."
       - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type pci
       - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/pci/bochs.cfg -debug
-  executor:
-      - make -C /storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/ executor
-      - scp -P 1569 -i /storage/PMIinDriFuzz/build/test-image/stretch.id_rsa /storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/bin/linux_amd64/syz-executor root@localhost:/syz-executor
+  ivshmem:
+      - make -C /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci
+      - scp -P 1569 -i /storage/PMIinDriFuzz/build/test-image/stretch.id_rsa /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci/ivshmem_pci.ko root@localhost:~/ivshmem_pci.ko
   reload-env:
     cmds:
       - echo "Reloading env..."

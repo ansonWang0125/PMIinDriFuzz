@@ -4,5 +4,6 @@
     "KASAN": "y",
     "KASAN_INLINE": "y",
     "CONFIGFS_FS": "y",
-    "SECURITYFS": "y"
+    "SECURITYFS": "y",
+    "UIO": "y"
 }

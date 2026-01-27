@@ -50,6 +50,8 @@
 1/26:
     1. We have to use UIO to handle the ivshmem because we can't know what exactly the sys proc path in guest vm. I find a sample module, and try to understand it.
     2. executor can link my perf_lib
+1/27:
+    1. The uio driver can't register, so /dev/uio0 not found, keep fixing this problem. 
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Create a lib to provide the fuzzer userspace agent to call the perf event and record the perf data to shared memory.

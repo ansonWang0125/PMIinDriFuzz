@@ -17,7 +17,7 @@ class Environment(object):
         self.env.build_dir = self.env.proj_dir / 'build'
         self.env.bin_dir = self.env.proj_dir / 'bin'
         self.env.out_work_dir = self.env.out_dir / 'workdir'
-        self.env.build_image_dir = self.env.build_dir / 'image'
+        self.env.build_image_dir = self.env.build_dir / 'prod-image'
         self.env.build_kernel_dir = self.env.build_dir / 'kernel'
         self.env.build_qemu_dir = self.env.build_dir / 'qemu'
         self.env.bin_qemu_dir = self.env.bin_dir / 'qemu'

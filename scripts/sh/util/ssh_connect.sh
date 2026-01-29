@@ -29,3 +29,5 @@ ssh -p 1569 \
     -o ConnectTimeout=10 \
     -i /storage/PMIinDriFuzz/build/image/stretch.id_rsa \
     -v root@localhost
+
+ssh -p 1569 -i /storage/PMIinDriFuzz/build/test-image/stretch.id_rsa root@localhost

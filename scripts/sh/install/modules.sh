@@ -12,14 +12,14 @@ usage() {
     echo -e "$U" >&2
 }
 
-BUILD_DIR=""
+BUILD_DIR="/storage/PMIinDriFuzz/build/kernel/main/"
 INSTALL_MOD_PATH=/storage/PMIinDriFuzz/build/kernel/image
 
 while :
 do
     case "$1" in
-        -b | --build)
-            BUILD_DIR="$2"
+        -t | --target)
+            TARGET="$2"
             shift 2
             ;;
         -h | --help)
@@ -40,13 +40,13 @@ do
     esac
 done
 
-if [[ -z ${BUILD_DIR} ]]; then
+if [[ -z "${BUILD_DIR}/${TARGET}" ]]; then
     usage "Build path is needed!!"
     exit 1
 fi;
 
-mkdir -p $BUILD_DIR
+mkdir -p "${BUILD_DIR}/${TARGET}"
 
-pushd ${BUILD_DIR}
-make modules_install INSTALL_MOD_PATH=$INSTALL_MOD_PATH
+pushd "${BUILD_DIR}/${TARGET}"
+make modules_install INSTALL_MOD_PATH="${INSTALL_MOD_PATH}/${TARGET}"
 popd

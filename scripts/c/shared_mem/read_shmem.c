@@ -11,6 +11,7 @@
 #define FLAG_NUM 8
 #define DATA_END 0xffffffffffffffff
 #define LBR_NUM 32
+#define IP_LEN 64
 
 struct shared_memory_page {
     int64_t data_head;
@@ -23,9 +24,9 @@ struct shared_memory_page* meta_data_page;
 
 int64_t read_shared_mem(){
     // TODO: Consider the data tail.
-    char ip_c[64];
+    char ip_c[IP_LEN];
     int64_t ip;
-    strcpy(ip_c, (char*)((int64_t)shared_memory + meta_data_page->data_tail));
+    strncpy(ip_c, (char*)((int64_t)shared_memory + meta_data_page->data_tail), IP_LEN);
     sscanf(ip_c, "%ld", &ip);
     meta_data_page->data_tail += sizeof(int64_t);
     if (meta_data_page->data_tail > PERF_MEM_SIZE)

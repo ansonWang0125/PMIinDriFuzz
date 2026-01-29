@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../shared_mem/ivshmem_driver.h"
 
 #define MSG_LEN sizeof(char) * 20
 
@@ -11,13 +12,19 @@ void* shared_memory = NULL;
 static struct shared_memory_page* meta_data_page;
 
 void map_shared_mem(){
-    int fd = open("/sys/devices/pci0000:00/0000:00:04.0/resource2", O_RDWR);
-    shared_memory = mmap(0, PERF_MEM_SIZE, PROT_WRITE, MAP_SHARED, fd, 0);
-    if (shared_memory == MAP_FAILED) {
+    struct uio_info_t* info = malloc(sizeof(struct uio_info_t));
+    memset(info, 0, sizeof(struct uio_info_t));
+    // Assume we only have one uio device.
+    info->uio_num = 0;
+    shared_memory = uio_mmap(info);
+    if (shared_memory == NULL) {
         printf("mmap pci failed!!\n");
         exit(0);
     }
-    memset(shared_memory, 0, PERF_MEM_SIZE);
+    if (info->maps[1].size < PERF_MEM_SIZE) {
+        printf("mapped size lower than expected\n");
+        return;
+    }
     // Fill struct at init part of shared_memory
     meta_data_page = (struct shared_memory_page*)shared_memory;
     meta_data_page->data_head = sizeof(struct shared_memory_page);

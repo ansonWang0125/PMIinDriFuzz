@@ -41,3 +41,9 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
 1. undefine reference to static link library.
     I try to link my perf agent library(generic c code) to syz-executor in host, but I got undefined reference, the problem is executor.cc is a cpp code, and it can't directly link a c library because it need more information than function name (see [stack_overflow](https://stackoverflow.com/questions/1068129/c-library-not-linking-using-gcc-g)).
 
+# modprobe
+1. modprobe: FATAL: Module ivshmem_pci not found in directory /lib/modules/5.5.0-rc3+
+    I copy all files from /build/image/pci/lib/modules to /lib/modules but we can't load it.
+    sol: I directly rm the /lib/modules and copy /build/image/pci/lib/modules to /lib/modules again. I guess the problem is cp -rd will leave some file exist in old folder but not in new folder.
+
+

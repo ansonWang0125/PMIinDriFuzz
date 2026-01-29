@@ -52,8 +52,12 @@
     2. executor can link my perf_lib
 1/27:
     1. The uio driver can't register, so /dev/uio0 not found, keep fixing this problem. 
+1/29:
+    1. I successfully build the syzkaller to record perf data to ivshmem.
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
-    2. Create a lib to provide the fuzzer userspace agent to call the perf event and record the perf data to shared memory.
-    3. The executor can't link the agent lib in host, find the reason.
-    4. Research why we need vmcall in perf_agent.
+    2. Research why we need vmcall in perf_agent.
+    3. Research the perf usage to accelerate simple program.
+    4. The main problem for our project availability is that whether there have any chance to use perf to accelerate driver execution, or the accelerable situation is rare or even not exist.
+    5. How to combine the pef data with agamotto checkpoint.
+    6. Find out why the lbr entry is so strange.

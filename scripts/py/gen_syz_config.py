@@ -60,7 +60,9 @@ class GenSyzConfig(object):
         self.config['vm']['cpu'] = 1
         self.config['vm']['mem'] = 4096
         qemu_args = '--enable-kvm '
-        qemu_args += f'-device {self.devices[0]} -cpu host'
+        qemu_args += f'-device {self.devices[0]} -cpu host '
+        qemu_args += "-device ivshmem-plain,memdev=perf_record "
+        qemu_args += "-object memory-backend-file,id=perf_record,share=on,mem-path=/dev/shm/perf_record,size=1M"
         self.config['vm']['qemu_args'] = qemu_args
         self.config['vm']['qemu'] = str(self.env.build_qemu_dir / "install/bin/qemu-system-x86_64")
         with open(f"/storage/PMIinDriFuzz/config/fuzzer/syzkaller/{self.args.driver_type}/{self.args.driver}.cfg", "w") as fd:

@@ -50,7 +50,7 @@ static void init_perf_event_attr(void)
 {
 	attr = (struct perf_event_attr*)malloc(sizeof(struct perf_event_attr));
 	if (!attr) {
-		printf("malloc failed, no perf mode\n");
+		fprintf(stderr, "malloc failed, no perf mode\n");
 		attr = (struct perf_event_attr*)NO_PERF_PTR;
 		return;
 	}
@@ -98,7 +98,7 @@ static void perf_prologue(int nr, ...)
 	va_list vl;
 	unsigned long arg0, arg1, arg2;
 
-	printf("[perf] prologue start\n");
+	fprintf(stderr, "[perf] prologue start\n");
 	// perf mmap.
 	rbuf = mmap(0, (1 + RING_BUFFER_PAGES) * PAGE_SIZE, PROT_WRITE, MAP_SHARED, perf_fd, 0);
 	fcntl(perf_fd,F_SETFL,O_RDWR|O_NONBLOCK|O_ASYNC);
@@ -140,11 +140,11 @@ static void perf_epilogue(void)
 	ioctl(perf_fd, PERF_EVENT_IOC_DISABLE, 0);
 	end_ret = end_perf();
 	perf_flag = 0;
-	printf("[perf] epilogue done, start_ret: %d, enable_ret: %d,"
+	fprintf(stderr, "[perf] epilogue done, start_ret: %d, enable_ret: %d,"
 	      " end_ret: %d\n",
 	      start_ret, enable_ret, end_ret);
 	munmap(rbuf,(1 + RING_BUFFER_PAGES) * PAGE_SIZE);
-	printf("counter: %d\n", counter);
+	fprintf(stderr, "counter: %d\n", counter);
 }
 
 static void perf_setup(void)
@@ -165,9 +165,9 @@ static void perf_setup(void)
 
 	perf_fd = perf_event_open(attr, 0, -1, -1, 0);
 	if (perf_fd < 0) {
-		printf("perf_event_open failed, errno = %d\n", errno);
+		fprintf(stderr, "perf_event_open failed, errno = %d\n", errno);
 	} else {
-		printf("[perf] perf_event_open ok\n");
+		fprintf(stderr, "[perf] perf_event_open ok\n");
 	}
 }
 
@@ -179,8 +179,6 @@ static void sample_handler(int sig_num,siginfo_t *sig_info,void *context)
 		static int sig_counter = 0, i = 0;
 		sig_counter += 1;
 		if(shared_memory != NULL && sample->header.type==PERF_RECORD_SAMPLE) {
-			printf("Writing shared memory, sig_counter: %d\n", sig_counter);
-			printf("handle sample, tail: %llx, head: %llx\n", rinfo->data_tail, rinfo->data_head);
 			for (i = 0; i < LBR_NUM; i++){
 				write_shared_mem((int64_t)(sample->lbrs[i].from));
 				write_shared_mem((int64_t)(sample->lbrs[i].to));
@@ -197,7 +195,7 @@ long perf_open(const char* pathname, int flags)
 {
 	long ret;
 
-	printf("[perf] perf_open\n");
+	fprintf(stderr, "[perf] perf_open\n");
 	perf_setup();
 	if (perf_fd < 0) {
 		return open(pathname, flags);
@@ -217,7 +215,7 @@ long perf_ioctl(int fd, int cmd, ...)
 	void* arg;
 	va_list vl;
 
-	printf("[perf] perf_ioctl\n");
+	fprintf(stderr, "[perf] perf_ioctl\n");
 	va_start(vl, cmd);
 	arg = va_arg(vl, void*);
 	va_end(vl);

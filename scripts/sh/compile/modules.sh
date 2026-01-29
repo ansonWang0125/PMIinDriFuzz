@@ -1,5 +1,9 @@
 #! /bin/bash
 
+set -x
+
+IVSHMEM_PCI_DIR=/storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci
+
 usage() {
     U=""
     if [[ -n "$1" ]]; then
@@ -7,7 +11,7 @@ usage() {
     fi
     U="${U}Usage: $0 [options]\n\n"
     U="${U}Options:\n"
-    U="$U    -m | --mode:         developement mode\n"
+    U="$U    -t | --target:         Target kernel\n"
     U="$U    -h | --help:           Show this output\n"
     echo -e "$U" >&2
 }
@@ -15,8 +19,8 @@ usage() {
 while :
 do
     case "$1" in
-        -m | --mode)
-            MODE="$2"
+        -t | --target)
+            TARGET="$2"
             shift 2
             ;;
         -h | --help)
@@ -37,12 +41,6 @@ do
     esac
 done
 
-BUILD_IMAGE_DIR="${BUILD_PATH}/${MODE}-image"
-CREATE_IMG="/storage/PMIinDriFuzz/fuzzer/go/src/github.com/google/syzkaller/tools/create-image.sh"
-
-mkdir -p ${BUILD_IMAGE_DIR}
-
-pushd ${BUILD_IMAGE_DIR}
-cp $CREATE_IMG $BUILD_IMAGE_DIR
-./create-image.sh
+pushd ${IVSHMEM_PCI_DIR}
+make TARGET=${TARGET}
 popd

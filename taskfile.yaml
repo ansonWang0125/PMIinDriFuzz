@@ -1,5 +1,9 @@
 version: '3'
 
+env:
+  TARGET: pci
+  MODE: prod
+
 tasks:
   build-host:
     cmds:
@@ -19,11 +23,11 @@ tasks:
       - ${SH_PATH}/build-env/compile_syzkaller.sh
   build-image:
     cmds:
-      - ${SH_PATH}/build/image.sh
+      - ${SH_PATH}/build/image.sh -m $MODE
   compile-guest:
     cmds:
       - echo "Compiling guest kernel..."
-      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/guest-kernel -c ${PROJ_PATH}/config/kernel/guest_defconfig -d def
+      - ${SH_PATH}/compile/kernel.sh -k ${PROJ_PATH}/guest-kernel -c ${PROJ_PATH}/config/kernel/guest_${TARGET}_defconfig -d $TARGET
   compile-qemu:
     cmds:
       - echo "Compiling qemu..."
@@ -32,21 +36,23 @@ tasks:
     cmds:
       - echo "Compiling syzkaller..."
       - ${SH_PATH}/compile/syzkaller.sh
+  compile-modules:
+      - ${SH_PATH}/compile/modules.sh -t $TARGET
   install-modules:
     cmds:
-      - ${SH_PATH}/install/module.sh -b /storage/PMIinDriFuzz/build/kernel/main/def
-      - ${SH_PATH}/vm/copy-modules.sh /storage/PMIinDriFuzz/build/kernel/image /storage/PMIinDriFuzz/build/image/stretch.img
+      - ${SH_PATH}/install/modules.sh -t $TARGET
+      - ${SH_PATH}/vm/copy-modules.sh /storage/PMIinDriFuzz/build/kernel/image/$TARGET stretch
   run-vm:
     cmds:
       - echo "Running vm..."
-      - ${SH_PATH}/run/vm.sh
+      - ${SH_PATH}/run/vm.sh -t $TARGET -m $MODE
   run-syzkaller:
       - echo "Running syzkaller..."
-      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type pci
-      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/pci/bochs.cfg -debug
+      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type $TARGET
+      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/$TARGET/bochs.cfg -debug
   ivshmem:
-      - make -C /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci
-      - scp -P 1569 -i /storage/PMIinDriFuzz/build/test-image/stretch.id_rsa /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci/ivshmem_pci.ko root@localhost:~/ivshmem_pci.ko
+      - make -C /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci TARGET=$TARGET
+      - scp -P 1569 -i /storage/PMIinDriFuzz/build/$MODE-image/stretch.id_rsa /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci/ivshmem_pci.ko root@localhost:~/ivshmem_pci.ko
   reload-env:
     cmds:
       - echo "Reloading env..."

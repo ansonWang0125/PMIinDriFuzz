@@ -4,5 +4,5 @@
 
 ls /lib/modules/5.5.0-rc3+/drivers/uio/ivshmem_pci.ko
 modprobe ivshmem_pci
-# mkdir -p /mnt/shared 
-# mount -t 9p -o trans=virtio,version=9p2000.L shared /mnt/shared
+mkdir -p /mnt/shared 
+mount -t 9p -o trans=virtio,version=9p2000.L shared /mnt/shared

@@ -54,6 +54,8 @@
     1. The uio driver can't register, so /dev/uio0 not found, keep fixing this problem. 
 1/29:
     1. I successfully build the syzkaller to record perf data to ivshmem.
+1/30:
+    1. research the relationship between i2c & pci & bochs.
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Research why we need vmcall in perf_agent.

@@ -1,5 +1,8 @@
 import json
 
+# PrIntFuzz only use these types of pcie to fuzz the driver.
+type_list = ['all', 'sound', 'fbdev', 'tty', 'gpu', 'media']
+
 def get_pci_id():
     pci_ids = set()
     id_counter = 0
@@ -34,6 +37,8 @@ def get_driver_setup():
             for subsystem in value["drivers"]:
                 if subsystem in dri_path:
                     driver_setup[dri_path]["syscalls"] = value["syscalls"]
+                elif subsystem not in type_list:
+                    break
     with open("/storage/PMIinDriFuzz/config/fuzzer/syzkaller/pci/driver_setup.json", "w") as fd:
         json.dump(driver_setup, fd, indent=4)
 

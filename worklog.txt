@@ -58,6 +58,11 @@
     1. research the relationship between i2c & pci & bochs.
 1/31:
     1. I found that I totally wrong to use i2c ioctl to call bochs, i2c didn't used in printfuzz, instead they use drm, researching drm. 
+2/1:
+    1. Successfully invoke bochs driver, but I found I can't write a driver test code for each driver, we should focus on the perf data difference between two test case then try to skip it.
+2/2:
+    1. Read the agamotto paper.
+    2. Trace syzkaller source code to know how the testcase generate.
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Research why we need vmcall in perf_agent.

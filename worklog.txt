@@ -63,6 +63,8 @@
 2/2:
     1. Read the agamotto paper.
     2. Trace syzkaller source code to know how the testcase generate.
+2/3:
+    1. Trace syzkaller source code and agamotto patch to know how did they generate checkpoint between testcases.
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Research why we need vmcall in perf_agent.

@@ -25,3 +25,4 @@
 1/26 TODO-L1: Make sure our perf_lib contains only generic code, because it should be executed in guest VM.
 1/27 TODO-L3: I am reading "UIO: user-space drivers", what is char driver and what is user-space block, and how DMA works, what is GPL's kernel.
 1/27 TODO-L3: How "insmod" work in kernel.
+1/28 TODO-L4: What is MAB algorithm. What is EcoFuzz

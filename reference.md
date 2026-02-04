@@ -1,3 +1,5 @@
+0. (What information (which is useful in my paper) we got from documentation)\[link\]
 1. (LWN.net talk about syzkaller)[https://lwn.net/Articles/677764/]
 2. (Agamotto)[https://www.usenix.org/system/files/sec20-song.pdf]
 3. (Trinity, the fuzzer before syzkaller)[https://lwn.net/Articles/536173/]
+4. (Syzkaller fuzzing algorithm, and provide the potential opportunity to optimize syzkaller by dynamically adjusting parameter)[https://www.usenix.org/conference/usenixsecurity21/presentation/wang-daimeng]

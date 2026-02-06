@@ -11,6 +11,21 @@ This work is targeted on optimizing the "fuzzing loop" in kernel fuzzing. We wan
 
 ---
 
+## Starup routine
+- ./scripts/sh/build-env/prerequisites.sh
+- git submodule init
+- git submodule update
+- exit
+- task build-host
+- sudo reboot
+- task build-syzkaller-env
+- task build-guest-env
+- task build-image
+- task build-qemu-env
+- task compile-guest
+- task compile-qemu
+-
+
 ## Setup
 
 TODO-L4: Complete filled commit for kernel, qemu, syzkaller.

@@ -2,5 +2,7 @@
 set -x
 
 pushd $SYZ_PATH
+./bin/syz-extract -os=linux -builddir=/storage/PMIinDriFuzz/build/kernel/main/pci -sourcedir=/storage/PMIinDriFuzz/guest-kernel -arch=amd64 dev_dri.txt
+make generate
 make
 popd

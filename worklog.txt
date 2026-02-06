@@ -67,6 +67,12 @@
     1. Trace syzkaller source code and agamotto patch to know how did they generate checkpoint between testcases.
 2/4:
     1. Keep reading the syzkaller source code, it has 62000 lines .....
+2/5:
+    1. Read syz-manager and syz-fuzzer
+2/6:
+    1. The VM for somehow can't run (segmentation fault), building the standard procdure to build the project
+    2. I guess the problem is because the scripts/sh/compile/kernel.sh broken, so the host kernel has some problems?
+    3. Keep trace syzkaller.
 DAILY_TODO:
     1. Find out how kAFL get the base address for each driver, specifically, what is "base address" for a driver.
     2. Research why we need vmcall in perf_agent.
@@ -74,3 +80,4 @@ DAILY_TODO:
     4. The main problem for our project availability is that whether there have any chance to use perf to accelerate driver execution, or the accelerable situation is rare or even not exist.
     5. How to combine the pef data with agamotto checkpoint.
     6. Find out why the lbr entry is so strange.
+    7. We still can't compile the syz-description...

@@ -34,6 +34,8 @@ Record every bugs when reproduce PrIntFuzz, use patch/printfuzz.patch to fix it.
         The enable_syscall list (config/linux/enable_config.json) in printfuzz for some reason not enable CONFIG_NET_NS, simply add to enable config list in pci
     2. machine check: got no fallback coverage:
         The syzkaller not support CONFIG_KCOV_INSTRUMENT_ALL disable fuzzing, so agamotto and printfuzz choose to close the error when syzkaller generate test syscall to test executor.
+    3. syscall ioctl$DRM_IOCTL_MODE_CURSOR is unsupported on all arches (typo?)
+        I paste the dev_dri.txt from printfuzz syzkaller, but I got this error.
 # fcntl
 1. error: `F_SETSIG' undeclared (first use in this function)
     sol: [debian report](https://lists.debian.org/debian-amd64/2005/02/msg00765.html) define _GNU_SOURCE  TODO_L3: what is _GNU_SOURCE

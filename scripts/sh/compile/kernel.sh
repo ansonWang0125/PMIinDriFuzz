@@ -85,11 +85,9 @@ pushd ${KERNEL}
 # make kvm_guest.config O=$BUILD_DIR
 if [ ! "$BUILD_DIR" = "" ]; then
 cp $CONFIG $BUILD_DIR/.config
-make olddefconfig O=$BUILD_DIR
 make -j40 O=$BUILD_DIR
 else
 cp $CONFIG .config
-make olddefconfig
 make -j40 
 fi;
 popd

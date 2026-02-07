@@ -1,7 +1,7 @@
 version: '3'
 
 env:
-  TARGET: pci
+  TARGET: def
   MODE: prod
 
 tasks:
@@ -48,8 +48,9 @@ tasks:
       - ${SH_PATH}/run/vm.sh -t $TARGET -m $MODE
   run-syzkaller:
       - echo "Running syzkaller..."
-      - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type $TARGET
-      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/$TARGET/bochs.cfg -debug
+      - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/def.cfg -debug
+      # - ${PYTHON} ${PY_PATH}/gen_syz_config.py --branch main --driver bochs --driver_type $TARGET
+      # - ${SYZ_PATH}/bin/syz-manager -config ${CONFIG_PATH}/fuzzer/syzkaller/$TARGET/bochs.cfg -debug
   ivshmem:
       - make -C /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci TARGET=$TARGET
       - scp -P 1569 -i /storage/PMIinDriFuzz/build/$MODE-image/stretch.id_rsa /storage/PMIinDriFuzz/scripts/c/module/ivshmem_pci/ivshmem_pci.ko root@localhost:~/ivshmem_pci.ko
